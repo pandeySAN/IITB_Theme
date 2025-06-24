@@ -13,3 +13,5 @@ regions:
   hero: 'Hero / Slider Section'
   content: 'Main Content'
   footer: 'Footer'
+  page_top: 'Page Top'
+  page_bottom: 'Page Bottom'

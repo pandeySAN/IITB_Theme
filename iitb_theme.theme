@@ -1,0 +1,95 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\file\Entity\File;
+
+/**
+ * Implements hook_form_system_theme_settings_alter().
+ */
+function iitb_theme_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+  // Textarea for top logo URLs
+  $form['top_logo_urls'] = [
+    '#type' => 'textarea',
+    '#title' => t('Top Logo URLs'),
+    '#description' => t('Paste public URLs of logo images, one per line.'),
+    '#default_value' => \Drupal::config('iitb_theme.settings')->get('top_logo_urls') ?: '',
+  ];
+
+  // Color picker for navigation bar
+  $form['navbar_background'] = [
+    '#type' => 'color',
+    '#title' => t('Navigation Bar Background Color'),
+    '#description' => t('Choose a background color for the top navigation bar.'),
+    '#default_value' => \Drupal::config('iitb_theme.settings')->get('navbar_background') ?: '#1e1e1e',
+  ];
+
+  // Upload field for Site Logo
+  $form['site_logo'] = [
+    '#type' => 'managed_file',
+    '#title' => t('Upload Site Logo'),
+    '#description' => t('Upload the main site logo. Recommended formats: PNG, JPG, SVG.'),
+    '#upload_location' => 'public://site_logo/',
+    '#default_value' => \Drupal::config('iitb_theme.settings')->get('site_logo') ?: NULL,
+    '#upload_validators' => [
+      'file_validate_extensions' => ['png jpg jpeg svg'],
+    ],
+  ];
+
+  // Attach submit handler
+  $form['#submit'][] = 'iitb_theme_theme_settings_submit';
+}
+
+/**
+ * Submit handler to save custom theme settings.
+ */
+function iitb_theme_theme_settings_submit($form, FormStateInterface $form_state) {
+  $config = \Drupal::configFactory()->getEditable('iitb_theme.settings');
+
+  // Save top logo URLs (textarea)
+  $urls = $form_state->getValue('top_logo_urls');
+  $config->set('top_logo_urls', $urls);
+
+  // Save nav background color
+  $navbar_color = $form_state->getValue('navbar_background');
+  $config->set('navbar_background', $navbar_color);
+
+  // Save site logo (managed file)
+  $site_logo_fid = $form_state->getValue('site_logo');
+  if (!empty($site_logo_fid) && is_array($site_logo_fid)) {
+    $fid = reset($site_logo_fid);
+    $file = File::load($fid);
+    if ($file && !$file->isPermanent()) {
+      $file->setPermanent();
+      $file->save();
+    }
+    $config->set('site_logo', [$fid]);
+  } else {
+    $config->clear('site_logo');
+  }
+
+  $config->save();
+}
+
+/**
+ * Preprocess variables for page.html.twig.
+ */
+function iitb_theme_preprocess_page(array &$variables) {
+  $config = \Drupal::config('iitb_theme.settings');
+
+  // Parse top logo URLs into array
+  $urls = $config->get('top_logo_urls') ?: '';
+  $url_array = array_filter(array_map('trim', explode("\n", $urls)));
+  $variables['top_logo_urls'] = $url_array;
+
+  // Navbar color
+  $variables['navbar_background'] = $config->get('navbar_background') ?: '#1e1e1e';
+
+  // Site logo URL
+  $site_logo_fid = $config->get('site_logo');
+  if (!empty($site_logo_fid) && is_array($site_logo_fid)) {
+    $file = File::load($site_logo_fid[0]);
+    if ($file) {
+      $variables['site_logo_url'] = file_create_url($file->getFileUri());
+    }
+  }
+}

@@ -1,176 +1,189 @@
 <div id="page-wrapper">
-  {% if page.top_logos %}
+
+  {% if top_logo_urls is defined and top_logo_urls|length > 0 %}
     <div id="top-logos" class="region-top-logos">
-      {{ page.top_logos }}
+      {% for logo_url in top_logo_urls %}
+        <img src="{{ logo_url }}" alt="Top Logo" class="top-logo-img" />
+      {% endfor %}
     </div>
   {% endif %}
 
   <header id="logo-header" class="site-header">
-    {% if page.logo %}
-      <div class="logo-area">{{ page.logo }}</div>
+    {% if site_logo_url is defined %}
+      <div class="logo-area">
+        <img src="{{ site_logo_url }}" alt="Site Logo" class="site-logo-img" />
+      </div>
+    {% elseif page.logo %}
+      <div class="logo-area">
+        {{ page.logo }}
+      </div>
     {% endif %}
+
     {% if page.header %}
-      <nav class="menu-bar">{{ page.header }}</nav>
+      <nav class="menu-bar" style="background-color: {{ navbar_background }};">
+        {{ page.header }}
+      </nav>
     {% endif %}
   </header>
 
-<!-- Hero Section with Popup Trigger -->
-<style>
-  /* ===== Hero Section ===== */
-  .hero-overlay {
-    position: relative;
-    width: 100vw;
-    overflow: hidden;
-  }
+  <!-- Hero Section with Popup Trigger -->
+  <style>
+    /* ===== Hero Section ===== */
+    .hero-overlay {
+      position: relative;
+      width: 100vw;
+      overflow: hidden;
+    }
 
-  .hero-overlay .bg-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-  }
+    .hero-overlay .bg-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
 
-  .hero-overlay .overlay-image {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 50%;
-    max-width: 800px;
-    height: auto;
-    z-index: 2;
-    pointer-events: none;
-  }
+    .hero-overlay .overlay-image {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 50%;
+      max-width: 800px;
+      height: auto;
+      z-index: 2;
+      pointer-events: none;
+    }
 
-  .hero-overlay .overlay-clickhere-image {
-    position: absolute;
-    top: 280px;
-    left: 210px;
-    width: 14%;
-    max-width: 250px;
-    height: 75px;
-    z-index: 3;
-    cursor: pointer;
-  }
+    .hero-overlay .overlay-clickhere-image {
+      position: absolute;
+      top: 280px;
+      left: 210px;
+      width: 14%;
+      max-width: 250px;
+      height: 75px;
+      z-index: 3;
+      cursor: pointer;
+    }
 
-  .hero-overlay .overlay-regi-image {
-    position: absolute;
-    top: 355px;
-    left: 125px;
-    width: 15%;
-    max-width: 200px;
-    height: auto;
-    z-index: 4;
-    cursor: pointer;
-  }
+    .hero-overlay .overlay-regi-image {
+      position: absolute;
+      top: 355px;
+      left: 125px;
+      width: 15%;
+      max-width: 200px;
+      height: auto;
+      z-index: 4;
+      cursor: pointer;
+    }
 
-  .hero-overlay .bubble-gif {
-    position: absolute;
-    top: 355px;
-    left: 330px;
-    width: 15%;
-    max-width: 300px;
-    height: 45px;
-    z-index: 5;
-    opacity: 0.85;
-    cursor: pointer;
-  }
+    .hero-overlay .bubble-gif {
+      position: absolute;
+      top: 355px;
+      left: 330px;
+      width: 15%;
+      max-width: 300px;
+      height: 45px;
+      z-index: 5;
+      opacity: 0.85;
+      cursor: pointer;
+    }
 
-  /* ===== Popup Styles ===== */
-  /* ===== Popup Styles ===== */
-.popup-overlay {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  justify-content: center;
-  align-items: center;
-}
+    /* ===== Popup Styles ===== */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
 
-.popup-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  position: relative;
-  max-width: 90%;
-  max-height: 90%;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  text-align: center;
-}
+    .popup-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
 
-.popup-image {
-  max-width: 500px;   /* Adjust size as needed */
-  max-height: 400px;
-  width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
+    .popup-image {
+      max-width: 500px;
+      max-height: 400px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  cursor: pointer;
-}
-</style>
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+  </style>
 
-<section class="hero-overlay">
-  <div class="overlay-container">
-    <img src="{{ directory }}/images/map-bg.png" alt="Map background" class="bg-image">
-    <img src="{{ directory }}/images/left-img.png" alt="Mapathon 2024 Logo" class="overlay-image">
-    
-    <a href="#timeline">
-      <img src="{{ directory }}/images/clickhere-btn.png" alt="Timeline" class="overlay-clickhere-image">
-    </a>
+  <section class="hero-overlay">
+    <div class="overlay-container">
+      <img src="{{ directory }}/images/map-bg.png" alt="Map background" class="bg-image">
+      <img src="{{ directory }}/images/left-img.png" alt="Mapathon 2024 Logo" class="overlay-image">
+      
+      <a href="#timeline">
+        <img src="{{ directory }}/images/clickhere-btn.png" alt="Timeline" class="overlay-clickhere-image">
+      </a>
 
-    <a href="#register">
-      <img src="{{ directory }}/images/regi-btn.png" alt="Register" class="overlay-regi-image">
-    </a>
+      <a href="#register">
+        <img src="{{ directory }}/images/regi-btn.png" alt="Register" class="overlay-regi-image">
+      </a>
 
-    <!-- ✅ Trigger for popup -->
-    <img src="{{ directory }}/images/bubble.gif" alt="Statistics" class="bubble-gif" id="openPopup">
+      <!-- ✅ Trigger for popup -->
+      <img src="{{ directory }}/images/bubble.gif" alt="Statistics" class="bubble-gif" id="openPopup">
+    </div>
+  </section>
+
+  <!-- ✅ Popup Structure -->
+  <div id="registration-popup" class="popup-overlay">
+    <div class="popup-content">
+      <span class="close-btn">&times;</span>
+      <img src="{{ directory }}/images/maps.jpeg" alt="Registration Statistics" class="popup-image">
+    </div>
   </div>
-</section>
 
-<!-- ✅ Popup Structure -->
-<div id="registration-popup" class="popup-overlay">
-  <div class="popup-content">
-    <span class="close-btn">&times;</span>
-    <img src="{{ directory }}/images/maps.jpeg" alt="Registration Statistics" class="popup-image">
-  </div>
+  <!-- ✅ JavaScript to open and close popup -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const openBtn = document.getElementById("openPopup");
+      const popup = document.getElementById("registration-popup");
+      const closeBtn = popup.querySelector(".close-btn");
+
+      openBtn.addEventListener("click", function () {
+        popup.style.display = "flex";
+      });
+
+      closeBtn.addEventListener("click", function () {
+        popup.style.display = "none";
+      });
+
+      popup.addEventListener("click", function (e) {
+        const content = popup.querySelector(".popup-content");
+        if (!content.contains(e.target)) {
+          popup.style.display = "none";
+        }
+      });
+    });
+  </script>
+
 </div>
 
-<!-- ✅ JavaScript to open and close popup -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const openBtn = document.getElementById("openPopup");
-    const popup = document.getElementById("registration-popup");
-    const closeBtn = popup.querySelector(".close-btn");
-
-    openBtn.addEventListener("click", function () {
-      popup.style.display = "flex";
-    });
-
-    closeBtn.addEventListener("click", function () {
-      popup.style.display = "none";
-    });
-
-    // Close popup when clicking outside
-    popup.addEventListener("click", function (e) {
-      const content = popup.querySelector(".popup-content");
-      if (!content.contains(e.target)) {
-        popup.style.display = "none";
-      }
-    });
-  });
-</script>
 
 <!-- About section -->
 
