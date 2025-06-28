@@ -1,3 +1,5 @@
+{{ attach_library('iitb_theme/global-styling') }}
+
 <div id="page-wrapper">
 
   {% if top_logo_urls is defined and top_logo_urls|length > 0 %}
@@ -9,16 +11,6 @@
   {% endif %}
 
   <header id="logo-header" class="site-header">
-    {% if site_logo_url is defined %}
-      <div class="logo-area">
-        <img src="{{ site_logo_url }}" alt="Site Logo" class="site-logo-img" />
-      </div>
-    {% elseif page.logo %}
-      <div class="logo-area">
-        {{ page.logo }}
-      </div>
-    {% endif %}
-
     {% if page.header %}
       <nav class="menu-bar" style="background-color: {{ navbar_background }};">
         {{ page.header }}
@@ -26,653 +18,107 @@
     {% endif %}
   </header>
 
-  <!-- Hero Section with Popup Trigger -->
-  <style>
-    /* ===== Hero Section ===== */
-    .hero-overlay {
-      position: relative;
-      width: 100vw;
-      overflow: hidden;
-    }
-
-    .hero-overlay .bg-image {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
-
-    .hero-overlay .overlay-image {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 50%;
-      max-width: 800px;
-      height: auto;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .hero-overlay .overlay-clickhere-image {
-      position: absolute;
-      top: 280px;
-      left: 210px;
-      width: 14%;
-      max-width: 250px;
-      height: 75px;
-      z-index: 3;
-      cursor: pointer;
-    }
-
-    .hero-overlay .overlay-regi-image {
-      position: absolute;
-      top: 355px;
-      left: 125px;
-      width: 15%;
-      max-width: 200px;
-      height: auto;
-      z-index: 4;
-      cursor: pointer;
-    }
-
-    .hero-overlay .bubble-gif {
-      position: absolute;
-      top: 355px;
-      left: 330px;
-      width: 15%;
-      max-width: 300px;
-      height: 45px;
-      z-index: 5;
-      opacity: 0.85;
-      cursor: pointer;
-    }
-
-    /* ===== Popup Styles ===== */
-    .popup-overlay {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .popup-content {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      position: relative;
-      max-width: 90%;
-      max-height: 90%;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-      text-align: center;
-    }
-
-    .popup-image {
-      max-width: 500px;
-      max-height: 400px;
-      width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 28px;
-      font-weight: bold;
-      color: #333;
-      cursor: pointer;
-    }
-  </style>
-
-  <section class="hero-overlay">
+  <div class="hero-overlay">
     <div class="overlay-container">
-      <img src="{{ directory }}/images/map-bg.png" alt="Map background" class="bg-image">
-      <img src="{{ directory }}/images/left-img.png" alt="Mapathon 2024 Logo" class="overlay-image">
-      
-      <a href="#timeline">
-        <img src="{{ directory }}/images/clickhere-btn.png" alt="Timeline" class="overlay-clickhere-image">
-      </a>
+      {% if hero_image_url %}
+        <img src="{{ hero_image_url }}" alt="Map background" class="bg-image">
+      {% endif %}
 
-      <a href="#register">
-        <img src="{{ directory }}/images/regi-btn.png" alt="Register" class="overlay-regi-image">
-      </a>
+      {% if hero_overlay_url %}
+        <img src="{{ hero_overlay_url }}" alt="Overlay Logo" class="overlay-image">
+      {% endif %}
 
-      <!-- ✅ Trigger for popup -->
-      <img src="{{ directory }}/images/bubble.gif" alt="Statistics" class="bubble-gif" id="openPopup">
+      {% if clickhere_button_url %}
+        <a href="#timeline">
+          <img src="{{ clickhere_button_url }}" alt="Click here" class="overlay-clickhere-image">
+        </a>
+      {% endif %}
+
+      {% if register_button_url %}
+        <a href="#register">
+          <img src="{{ register_button_url }}" alt="Register" class="overlay-regi-image">
+        </a>
+      {% endif %}
+
+      {% if bubble_gif_url %}
+        <a href="#!" class="open-popup" data-popup="popupModal">
+          <img src="{{ bubble_gif_url }}" alt="Stats Bubble" class="bubble-gif">
+        </a>
+
+        <div id="popupModal" class="popup-modal">
+          <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <img src="{{ map_image_url }}" alt="Map Image" class="popup-map-image">
+          </div>
+        </div>
+      {% endif %}
     </div>
+  </div>
+
+  <!-- MAIN CONTENT AREA -->
+  <main role="main" class="main-content">
+
+    {# About + Social Media Section #}
+    {% if page.content.iitb_theme_about_social %}
+      {{ page.content.iitb_theme_about_social }}
+    {% endif %}
+
+    {# Registration Section #}
+    {% if page.content.iitb_theme_mapathonregister %}
+      <section class="registration-section" id="register">
+        {{ page.content.iitb_theme_mapathonregister }}
+      </section>
+    {% endif %}
+
+    {# Important Dates Section #}
+    {% if page.content['iitb_theme_importantdates'] %}
+      <section class="important-dates-section" id="important-dates">
+        <div class="important-dates-wrapper">
+          {{ page.content['iitb_theme_importantdates'] }}
+        </div>
+      </section>
+    {% endif %}
+
+
+    <!-- Start of GIS Mandates -->
+    {% if page.content.iitb_theme_fosseegismandates %}
+      <section class="mapathon-gis-mandates" id="gis-mandates">
+        {{ page.content.iitb_theme_fosseegismandates }}
+      </section>
+    {% endif %}
+
+    <!-- Partners and Organisers Section -->
+    {% if partner_logo_urls is not empty %}
+      <section class="mapathon-partners" id="partner">
+        <h2>Partners and Organisers</h2>
+        <hr style="border: none; height: 1px; background-color: red; width: 30%; margin-left: 0;">
+        <div class="partner-logos">
+          {% for logo in partner_logo_urls %}
+            <img src="{{ logo }}" alt="Partner Logo">
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    <!-- Knowledge Partners Section -->
+    {% if knowledge_logo_urls is not empty %}
+      <section class="mapathon-knowledge-partners" id="knowledge-partners">
+        <h2>Knowledge Partners</h2>
+        <hr style="border: none; height: 1px; background-color: red; width: 30%; margin-left: 0;">
+        <div class="knowledge-logos">
+          {% for logo in knowledge_logo_urls %}
+            <img src="{{ logo }}" alt="Knowledge Partner Logo">
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+  <!-- mapathon theme -->
+  {% if page.content.iitb_theme_mapathontheme %}
+  <section id="mapathon-themes-wrapper">
+    {{ page.content.iitb_theme_mapathontheme }}
   </section>
-
-  <!-- ✅ Popup Structure -->
-  <div id="registration-popup" class="popup-overlay">
-    <div class="popup-content">
-      <span class="close-btn">&times;</span>
-      <img src="{{ directory }}/images/maps.jpeg" alt="Registration Statistics" class="popup-image">
-    </div>
-  </div>
-
-  <!-- ✅ JavaScript to open and close popup -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const openBtn = document.getElementById("openPopup");
-      const popup = document.getElementById("registration-popup");
-      const closeBtn = popup.querySelector(".close-btn");
-
-      openBtn.addEventListener("click", function () {
-        popup.style.display = "flex";
-      });
-
-      closeBtn.addEventListener("click", function () {
-        popup.style.display = "none";
-      });
-
-      popup.addEventListener("click", function (e) {
-        const content = popup.querySelector(".popup-content");
-        if (!content.contains(e.target)) {
-          popup.style.display = "none";
-        }
-      });
-    });
-  </script>
-
-</div>
-
-
-<!-- About section -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Mapathon Section</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #fff;
-      font-family: "Times New Roman", serif;
-    }
-
-    .mapathon-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 40px;
-      background-color: #fff;
-    }
-
-    .mapathon-about,
-    .mapathon-social {
-      flex: 1 1 48%;
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .mapathon-about h2,
-    .mapathon-social h2 {
-      font-size: 22px;
-      color: #0066ff;
-      margin-bottom: 5px;
-    }
-
-    .section-underline {
-      border: none;
-      height: 2px;
-      background-color: red;
-      width: 50%;
-      margin: 0 0 15px 0; /* Aligns it to the left */
-    }
-
-    .mapathon-about p {
-      font-size: 16px;
-      line-height: 1.6;
-      text-align: justify;
-    }
-
-    .twitter-embed {
-      margin-top: 20px;
-    }
-
-    /* Responsive: Stack columns on smaller screens */
-    @media (max-width: 768px) {
-      .mapathon-about,
-      .mapathon-social {
-        flex: 1 1 100%;
-      }
-    }
-  </style>
-</head>
-<body>
-
-<main role="main" class="main-content">
-  <div class="mapathon-wrapper">
-
-    <div class="mapathon-about" id="about">
-      <h2>About Mapathon</h2>
-      <hr style="border: none; height: 2px; background-color: red; width: 50%; margin-left: 0;">
-      <p>
-        Mapathon is a map making competition for creating thematic maps, using open source data and mapping software. It is a collaborative event where participants come together to develop new tools/methods that improve the accuracy and usefulness of maps for a community. The FOSSEE team at IIT Bombay, along with its partners (earlier partners were AICTE, ISRO) will invite all Indians - to produce maps using various data (e.g. observation data, remote sensing data, crowdsourced data, etc.). The primary objective is to understand the potential of remote sensing data and make maps for Indian regions using free open source mapping software (e.g.: QGIS). The participants will collectively work in a crowd sourcing method for jointly producing thematic maps of India.<br/>
-        <br/>
-        The data collected from various platforms have tremendous potential in mapping India’s resources, agriculture, climate and disaster management, rural and urban planning and in identifying pathways for future development. Such maps can be created using Free open Source platforms (such as QGIS). Let us join together to create such maps through the Mapathon.<br/>
-        <br/>
-        Mapathon also aims to develop indigenous capacity to customize and employ mapping to resolve societal challenges and create new opportunities for young India.-. The primary objective is to understand the potential of open source mapping and maps for Indian regions and to build capacity for the same. <br/>
-        
-      </p>
-    </div>
-
-    <div class="mapathon-social">
-      <h2>Social Media</h2>
-      <hr style="border: none; height: 2px; background-color: red; width: 50%; margin-left: 0;">
-      <div class="twitter-embed">
-        <a class="twitter-timeline" href="https://twitter.com/fossee?ref_src=twsrc%5Etfw">Tweets by FOSSEE</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-      </div>
-    </div>
-
-  </div>
-</main>
-<script>
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        scrollToElement(target, 1000); // 1000ms = 1 second
-      }
-    });
-  });
-
-  function scrollToElement(element, duration) {
-    const targetPosition = element.getBoundingClientRect().top + window.pageYOffset;
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    let startTime = null;
-
-    function animation(currentTime) {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const run = ease(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-      if (timeElapsed < duration) requestAnimationFrame(animation);
-    }
-
-    function ease(t, b, c, d) {
-      // easeInOutQuad
-      t /= d / 2;
-      if (t < 1) return c / 2 * t * t + b;
-      t--;
-      return -c / 2 * (t * (t - 2) - 1) + b;
-    }
-
-    requestAnimationFrame(animation);
-  }
-</script>
-
-</body>
-</html>
-
-<!-- registration -->
-<section class="registration-section">
-<div class="mapathon-register" id="register">
-  <h2>Registration</h2>
-  <p>Please click on the following button to register yourself for the Hackathon</p>
-  <a href="#registration-form" class="register-btn">Register</a>
-</section>
-</div>
-
-
-<!-- ✅ Start of Important Dates Section -->
-<section class="important-dates-section">
-  <h2>Important Dates</h2>
-  <hr style="border: none; height: 2px; background-color: red; width: 30%; margin-left: 0;">
-  <div class="important-dates-wrapper">
-    <table class="dates-table">
-      <tr><td>Registration start date</td><td>Feb 15, 2025</td></tr>
-      <tr><td>Registration end date</td><td>June 25, 2025</td></tr>
-      <tr><td>Orientation</td><td>June 10, 2025</td></tr>
-      <tr><td>Doubt clearing session 01</td><td>June 25, 2025</td></tr>
-      <tr><td>Doubt clearing session 02</td><td>June 30, 2025</td></tr>
-      <tr><td>Submission start date</td><td>June 01, 2025</td></tr>
-      <tr><td>Submission end date</td><td>June 30, 2024</td></tr>
-      <tr><td>Mapathon Evaluation</td><td>July 01 to July 03, 2025</td></tr>
-      <tr><td>01 minute (recording) presentation submission by winners</td><td>July 05, 2025 (by Champions/ Winners)</td></tr>
-      <tr><td>Declaration of Results*</td><td>TBD</td></tr>
-    </table>
-  </div>
-</section>
-<!-- ✅ End of Important Dates Section -->
-
-
-<!-- ✅ Start of GIS Mandates -->
-<div class="mapathon-gis-mandates">
-  <h2>FOSSEE GIS Mandates</h2>
-  <hr style="border: none; height: 2px; background-color: red; width: 30%; margin-left: 0;">
-  <p>
-    The following are the mandates of the IIT Bombay FOSSEE GIS team. It is requested that the applicant(s) before or during the time of registration go through all the mandates laid out by the IIT Bombay FOSSEE GIS team, and adhere to it. If any violation/ breach of any mandate is found at any phase of the Mapathon, the concerned team(s) shall be disqualified without any further notice. It is also to be noted that at all times, the decision of the IIT Bombay FOSSEE GIS team shall be final and non-appealable.
-  </p>
-  <ul>
-    <li><strong>Indian Citizen</strong> Only</li>
-    <li>Must be a bonafide student/alumni of UGC/AICTE/AIU recognized University/ College/ Research Organization in India</li>
-    <li>Use only <strong>Free/Libre Open Source Software</strong></li>
-    <li>Use only <strong>Open Source Hardware</strong></li>
-    <li>Align with any <strong>SDG. Work on real-life data sets.</strong></li>
-    <li>Adhere to the <strong>Indian National Geospatial Policy</strong></li>
-    <li>Use Indian Satellite data, and shape file only from the <strong>Survey of India</strong> portal</li>
-    <li>Inclined towards <strong><em>Gati Shakti</em></strong> <em>(recommended)</em></li>
-  </ul>
-  <p>
-    The decision of the IIT Bombay FOSSEE GIS team will be final in all circumstances and non-appealable. By registering and participating in the Mapathon, the participant(s)/ team(s) will be bound to the mandates and shall be expected to abide by them.
-  </p>
-</div>
-<!-- ✅ End of GIS Mandates -->
-
-
-<!-- ✅ Partners and Organisers Section -->
-<div class="mapathon-partner" id="partner">
-  <h2>Partners and Organisers</h2>
-  <hr style="border: none; height: 2px; background-color: red; width: 30%; margin-left: 0;">
-  <div class="partner-logos">
-    <img src="{{ directory }}/images/iitb-logo.png" alt="IIT Bombay">
-    <img src="{{ directory }}/images/fossee-logo.png" alt="FOSSEE">
-    <img src="{{ directory }}/images/st-logo.png" alt="Spoken Tutorial">
-    <img src="{{ directory }}/images/iit-tirupati.png" alt="IIT Tirupati">
-    <img src="{{ directory }}/images/image.png" alt="IHub Foundation">
-  </div>
-</div>
-
-<!-- ✅ Knowledge Partners Section -->
-<div class="mapathon-knowledge-partners">
-  <h2>Knowledge Partners</h2>
-  <hr style="border: none; height: 2px; background-color: red; width: 30%; margin-left: 20px;">
-  <div class="partner-logos">
-    <img src="{{ directory }}/images/tn-logo.png" alt="Tamil Nadu Govt">
-    <img src="{{ directory }}/images/tsdc-logo.png" alt="Survey of India">
-  </div>
-</div>
-
-
-<!-- ✅ HTML + CSS for Mapathon Themes Section -->
-<style>
-  .mapathon-themes {
-    font-family: "Times New Roman", Times, serif;
-    background-color: #fff;
-    padding: 60px 20px;
-    text-align: left;
-  }
-
-  .mapathon-themes h2 {
-    font-size: 18px;
-    color: #0066cc;
-  }
-
-  /* Tabs */
-  .theme-tabs .tabs {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 14px;
-    border-bottom: 1px solid #ccc;
-    padding: 0;
-    margin-bottom: 20px;
-  }
-
-  .theme-tabs .tab {
-    padding: 10px 16px;
-    background: #f9f9f9;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    border-bottom: none;
-    margin-right: 4px;
-    font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
-  }
-
-  .theme-tabs .tab.active {
-    background: #e6f0ff;
-    border-color: #0066cc;
-    color: #004080;
-    font-weight: 700;
-  }
-
-  /* Tab Contents */
-  .theme-tabs .tab-content {
-    display: none;
-  }
-
-  .theme-tabs .tab-content.visible {
-    display: block;
-  }
-
-  /* Columns inside tab */
-  .theme-columns {
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-    padding-left: 40px;
-  }
-
-  .theme-columns ul,
-  .problem-list {
-    font-size: 14px;
-    flex: 1 1 300px;
-    list-style: none;
-    padding-left: 0;
-    line-height: 1.8;
-  }
-
-  .problem-list {
-    list-style-type: disc;
-    padding-left: 20px;
-  }
-
-  @media (max-width: 768px) {
-    .theme-tabs .tabs {
-      flex-direction: column;
-    }
-
-    .theme-tabs .tab {
-      width: 100%;
-      margin-bottom: 6px;
-    }
-
-    .theme-columns {
-      flex-direction: column;
-      gap: 20px;
-      padding-left: 10px;
-    }
-  }
-</style>
-
-<div class="mapathon-theme" id="mapathon">
-<section class="mapathon-themes">
-  <h2>Mapathon Themes</h2>
-  <hr style="border: none; height: 2px; background-color: red; width: 30%; margin-left: 0;">
-  <div class="theme-tabs">
-    <!-- Tab Buttons -->
-    <ul class="tabs">
-      <li class="tab active" data-tab="themes-tab">Themes</li>
-      <li class="tab" data-tab="problem-tab">Problem Statement</li>
-    </ul>
-
-    <!-- Tab Content -->
-    <div id="themes-tab" class="tab-content visible">
-      <div class="theme-columns">
-        <ul>
-          <li>Agriculture</li>
-          <li>Drones</li>
-          <li>Case Study with Policy impacts</li>
-          <li>Forestry</li>
-          <li>Remote Sensing</li>
-          <li>Geology</li>
-          <li>Groundwater</li>
-          <li>Transport</li>
-          <li>Transport</li>
-          <li>Internet based Case Study</li>
-          <li>Media GIS Case Study</li>
-          <li>Environmental</li>
-          <li>Urban GIS Case Study</li>
-          <li>Refineries in India</li>
-          <li>Nautical GIS Case Study</li>
-          <li>Oil & Gas GIS Case Study</li>
-          <li>Government GIS Case Study</li>
-          <li>Societal GIS Case Study</li>
-          <li>Sports GIS Case Study</li>
-          <li>Telecommunication GIS Case Study</li>
-          <li>Transmission GIS Case Study</li>
-          <li>Street view measure/li>
-          <li>Smart city</li>
-          <li>Any other theme can be proposed (subject to approval by IIT Bombay-FOSSEE-GIS team)</li>
-        </ul>
-
-        <ul>
-          <li>Hydrology</li>
-          <li>Civil Engineering</li>
-          <li>Oceanography</li>
-          <li>Gaming</li>
-          <li>Landscaping</li>
-          <li>Geostatistics</li>
-          <li>GIS in Medical Sciences</li>
-          <li>City Planning</li>
-          <li>Glacier</li>
-          <li>CLand Use Land Cover of Districts in India</li>
-          <li>Medicine</li>
-          <li>Municipal GIS Case Study</li>
-          <li>Mining GIS Case Study</li>
-          <li>Automobile GIS Case Study</li>
-          <li>Ocean GIS Case Study</li>
-          <li>Park GIS Case Study</li>
-          <li>Real Estate GIS Case Study</li>
-          <li>Soil GIS Case Study</li>
-          <li>Geodesy GIS Case Study</li>
-          <li>Tourism GIS Case Study</li>
-          <li>Spatial Billing Systems</li>
-          <li>Weather GIS Case Study</li>
-          <li>Smart village</li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="problem-tab" class="tab-content">
-      <ul class="problem-list">
-        <li>Mapping of natural resources/man-made features</li>
-        <li>Natural Resources Change Detection</li>
-        <li>LULC Change with hotspots using LULC maps from Bhuvan</li>
-        <li>Flood Maps</li>
-        <li>State-wise Health Care Indicators Maps</li>
-        <li>Locust infestation / Stubble burning / Low lying areas / Jhum Cultivation</li>
-        <li>Road Network and Road Quality / Drainage Maps</li>
-        <li>Land Degradation Maps</li>
-        <li>Health infra, population, age group etc. for Vaccination</li>
-        <li>Detection of change in Waterbodies / Reservoirs / Wetlands</li>
-        <li>Crop / Plantation  type map</li>
-        <li>Amenities map </li>
-        <li>Water source and quality mapping</li>
-        <li>Population crowding/ traffic hotspots</li>
-        <li>Network coverage maps</li>
-        <li>Local markets/produce/employment maps </li>
-        <li>Map of waste segregation and collection points</li>
-        <li>Mapping places of cultural importance</li>
-        <li>Choose your own topic</li>
-      </ul>
-    </div>
-  </div>
-</section>
-</div>
-
-<!-- ✅ Tab Toggle Script (use inline or move to script.js in Drupal) -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const tabs = document.querySelectorAll(".theme-tabs .tab");
-    const contents = document.querySelectorAll(".theme-tabs .tab-content");
-
-    tabs.forEach(tab => {
-      tab.addEventListener("click", function () {
-        // Activate tab
-        tabs.forEach(t => t.classList.remove("active"));
-        this.classList.add("active");
-
-        // Show corresponding content
-        const selectedId = this.getAttribute("data-tab");
-        contents.forEach(content => {
-          content.classList.remove("visible");
-          if (content.id === selectedId) {
-            content.classList.add("visible");
-          }
-        });
-      });
-    });
-  });
-</script>
-
-
-<!-- Mapathon Process Flow -->
-<style>
-.mapathon-process-flow {
-  padding: 40px 20px;
-  background-color: #ffffff;
-  font-family: "Times New Roman", Times, serif;
-}
-
-.process-title {
-  font-size: 20px;
-  color: #0066cc;
-}
-
-.process-table {
-  margin: 0 auto;
-  border-collapse: collapse;
-  width: 100%;
-  max-width: auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  font-size: 12px;
-}
-
-.process-table tr:nth-child(even) {
-  background-color:rgb(255, 255, 255);
-}
-
-.process-table tr:nth-child(odd) {
-  background-color:rgb(243, 242, 242);
-}
-
-.process-table td {
-  padding: 20px;
-  text-align: center;
-}
-
-.process-image-wrapper {
-  margin-top: 30px;
-}
-
-.process-image {
-  width: 100%;
-  max-width: auto;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-svg {
-    margin: 10px auto;
-    display: block;
-    font-size: 10px
-  }
-</style>
+  {% endif %}
 
 <!-- Mapathon Process Flow html -->
 <div class="mapathon-process-flow">
@@ -759,240 +205,96 @@ svg {
     </tr>
   </table>
 
+{% if process_flow_image_url %}
   <div class="process-image-wrapper">
-    <img src="{{ directory }}/images/image copy.png" alt="Mapathon Process Flow" class="process-image">
+    <img src="{{ process_flow_image_url }}" alt="Mapathon Process Flow" class="process-image">
   </div>
-</div>
+{% endif %}
 
-<!-- Eligibility to participate -->
-<div class="mapathon-eligibility" id="eligibility">
-<div style="padding: 30px; font-family: 'Times New Roman', Times, serif; line-height: 1.6; background-color: #ffffff;">
-
-  <!-- Section: Eligibility -->
-  <h2 style="color: #0056b3; font-size: 20px;">
-    Eligibility to participate
-  </h2>
-  <hr style="border: none; height: 2px; background-color: red; width: 30%; margin-left: 0;">
-
-  <ul style="font-size: 10px; color: #000;">
-    <li>The IIT Bombay-FOSSEE-Mapathon is open <strong>‘ONLY FOR INDIAN NATIONALS’</strong>.</li>
-    <li>Students, Scholars, Faculty who are currently pursuing their studies/working in UGC/AICTE/AIU/Union or State Government approved Universities/Colleges/Institutions/Organisations are eligible to apply.</li>
-    <li>The participating team(s) can be a mix of any field of study in Science or Engineering with adequate knowledge on creating maps/GIS, Remote Sensing, Environment, Geography, Geology, Policy, Statistics, Policy, Medicine, Management, Urban Planning, Rural Development or any related domain.</li>
-    <li>Graduates holding a degree in any of the related domains (as mentioned above) are eligible to participate.</li>
-    <li>Professionals working in the GIS industry are also eligible to participate.</li>
-    <li>Indian students pursuing their education abroad are allowed to participate as well. In this case, they shall be eligible only for the award of ‘e-certificate’.</li>
-  </ul>
-
-  <!-- Important Note -->
-  <p style="background-color: #fff8dc; border-left: 5px solid #e6c200; padding: 10px; margin-top: 10px; font-size: 10px;">
-    <strong>Note:</strong> All the participants of the “IIT Bombay-FOSSEE-Mapathon” are expected to mandatorily adhere to the mandates of the IIT Bombay FOSSEE GIS team. The decision made by the IIT Bombay FOSSEE GIS team shall be final and non-appealable at all circumstances.
-  </p>
-
-  <!-- Section: Team Size -->
-  <h3 style="color: #b30000; margin-top: 40px; font-size: 10px;"><strong>Team size and composition</strong></h3>
-  <p style="font-size: 10px;">Participation in the fourth edition of the IIT Bombay FOSSEE Geospatial Mapathon 2024 can be done on (i) an individual basis (single member) or (ii) a team (minimum 02 to maximum 04 members + 01 mentors). Ideally, a team should have people with basic mapping expertise.</p>
-  <p style="font-size: 10px;">The team can have a mentor (e.g. faculty, teacher, etc.), however, the exercise should be done by the team. Mentors can mentor multiple teams.</p>
-  <p style="font-size: 10px;">Each participant/mentor will be issued only one certificate.</p>
-
-  <!-- Section: Data Resources -->
-  <h3 style="color: #b30000; margin-top: 40px; font-size: 10px;"><strong>Data and Helpful Resources</strong></h3>
-  <p style="font-size: 10px;">The maps can be created at National/State/District level boundaries using any 'open source' data.</p>
-  <p style="font-size: 10px;">For boundary data/materials, you may visit the Survey of India <a href="https://surveyofindia.gov.in/" target="_blank" style="color: #0056b3;">portal</a>.</p>
-
-  <!-- Final Note -->
-  <p style="background-color: #fff8dc; border-left: 5px solid #e6c200; padding: 10px; margin-top: 10px; font-size: 10px;">
-    <strong>Note:</strong> The user is liable for the correct use of Indian national boundaries, if represented in the maps.
-  </p>
-
-</div>
+{# Eligibility Section Wrapper #}
+{% if page.content.iitb_theme_eligibility %}
+  <section class="mapathon-eligibility" id="eligibility">
+    {{ page.content.iitb_theme_eligibility }}
+  </section>
+{% endif %}
 
 
-<!-- Start of Organizing Team Section -->
-<div class="mapathon-team" id="teams">
-<div style="background-color:rgb(241, 241, 241); padding: 40px; font-family: 'Times New Roman', Times, serif;">
+<!-- organizing team -->
+{% if page.content.iitb_theme_organisingteam %}
+  <section class="mapathon-team" id="teams">
+    {{ page.content.iitb_theme_organisingteam }}
+  </section>
+{% endif %}
 
-  <!-- Title -->
-  <h2 style="color: #007bff; font-size: 1.5rem; margin-bottom: 10px;">
-    Mapathon Organizing Team
-  </h2>
-  <hr style="border: none; height: 2px; background-color: red; width: 50%; margin-left: 0;">
 
-  <!-- IIT Bombay Section -->
-  <div style="margin-top: 50px; text-align: center;">
-    <p style="font-size: 16px; margin: 0;">Core Team</p>
-    <p style="font-size: 24px; margin: 0;">IIT Bombay</p>
-  </div>
-
-  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
-    <div style="background: white; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 240px; text-align: left;">
-      <div style="font-size: 18px;">Prof. Kannan Moudgalya</div>
-      <div style="font-size: 12px; margin-top: 5px;">
-        P.I. FOSSEE & Professor Emeritus<br/>
-        <br/>
-        Indian Institute of Technology Bombay
-      </div>
-    </div>
-
-    <div style="background: white; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 240px; text-align: left;">
-      <div style="font-size: 18px;">Prof. Pennan Chinnasamy</div>
-      <div style="font-size: 12px; margin-top: 5px;">
-        Co.P.I. FOSSEE & Professor-in-Charge<br/>
-        <br/>
-        The Rural Data Research and Analysis Lab<br/>
-        <br/>
-        Indian Institute of Technology Bombay
-      </div>
-    </div>
-
-    <div style="background: white; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 240px; text-align: left;">
-      <div style="font-size: 18px;">Mr. Mohamed Kasim Khan</div>
-      <div style="font-size: 12px; margin-top: 5px;">
-        National Coordinator - FOSSEE (GIS)<br/>
-        <br?
-        Senior Project Research Scientist<br/>
-        <br/>
-        (National Mission on Education through ICT, <br/> Ministry of Education, Government of India)<br/>
-        <br/>
-        Indian Institute of Technology Bombay
-      </div>
-    </div>
-  </div>
-
-  <!-- IIT Tirupati Section -->
-  <div style="margin-top: 50px; text-align: center;">
-    <p style="font-size: 24px; margin: 0;">IIT Tirupati</p>
-  </div>
-
-  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
-    <div style="background: white; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 350px; text-align: left;">
-      <div style="font-size: 18px;">Prof. Roshan Srivastav</div>
-      <div style="font-size: 12px; margin-top: 5px;">
-        Director<br/>
-        <br/>
-        Indian Institute of Technology Tirupati
-      </div>
-    </div>
-
-    <div style="background: white; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 350px; text-align: left;">
-      <div style="font-size: 18px;">Prof. Roshan Srivastav</div>
-      <div style="font-size: 12px; margin-top: 5px;">
-        Project Director & Associate Professor<br/>
-        <br/>
-        IIT Tirupati Navavishkar I-Hub Foundation<br/>
-        <br/>
-        (National Mission Interdisciplinary Cyber Physical System, DST, Government of India)
-      </div>
-    </div>
-  </div>
-
-  <!-- ICFOSS Section -->
-  <div style="margin-top: 50px; text-align: center;">
-    <p style="font-size: 24px; margin: 0;">ICFOSS (International Centre for Free and Open Source Software)</p>
-    <p style="font-size: 20px; margin-top: -5px;">
-      An Autonomous body under the Department of Electronics and IT, Government of Kerala
-    </p>
-  </div>
-
-  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
-    <div style="background: white; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 180px; text-align: left;">
-      <div style="font-size: 18px;">Dr. Sunil T.T.</div>
-      <div style="font-size: 12px;">Director, ICFOSS</div>
-      <hr style="margin: 8px 0; border-color: #e0e0e0;">
-      <div style="font-size: 18px;">Mr. Srinivasan</div>
-      <div style="font-size: 12px;">Program Head, ICFOSS</div>
-    </div>
-
-    <div style="background: white; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 180px; text-align: left;">
-      <div style="font-size: 18px;">Mr. Jayakumar</div>
-      <div style="font-size: 12px;">Program Coordinator,<br/>ICFOSS</div>
-      <hr style="margin: 8px 0; border-color: #e0e0e0;">
-      <div style="font-size: 18px;">Mr. Shafique</div>
-      <div style="font-size: 12px;">Technical Coordinator,<br/>ICFOSS</div>
-    </div>
-  </div>
-
-</div>
-</div>
 
 <!-- Contact Us Section -->
 <div class="mapathon-contact" id="contact">
-<div style="background-color: rgb(255, 255, 255); padding: 40px; font-family: 'Times New Roman', Times, serif; width: auto;">
+  <div class="contact-container">
+    
+    <!-- Heading -->
+    <h2 class="contact-heading">Contact Us</h2>
+    <hr class="section-divider">
 
-  <!-- Heading -->
-  <h2 style="color: #007bff; font-size: 1.5rem; margin-bottom: 10px;">
-    Contact Us
-  </h2>
-  <hr style="border: none; height: 2px; background-color: red; width: 50%; margin-left: 0;">
+    <!-- Contact Details -->
+    <div class="contact-name">Mohamed Kasim Khan</div>
 
-  <!-- Contact Details Card -->
-
-    <div style="font-size: 16px; font-weight: bold; color: black;">
-      Mohamed Kasim Khan
-    </div>
-
-    <div style="font-size: 14px; color: black; margin-top: 5px;">
-      National Coordinator - FOSSEE (GIS)<br/>
-      Senior Project Research Scientist<br/>
-      National Mission on Education through ICT<br/>
-      Ministry of Education, Government of India<br/>
+    <div class="contact-role">
+      National Coordinator - FOSSEE (GIS)<br>
+      Senior Project Research Scientist<br>
+      National Mission on Education through ICT<br>
+      Ministry of Education, Government of India<br>
       Indian Institute of Technology Bombay
     </div>
 
-    <div style="margin-top: 15px; font-size: 14px;">
-      <strong>Email:</strong> <a href="mailto:mohamedkasim@iitb.ac.in" style="color:rgb(0, 0, 0);">mohamedkasim@iitb.ac.in</a><br/>
-      <strong>General Inquiries:</strong> <a href="mailto:gis@fossee.in" style="color:rgb(0, 0, 0);">gis@fossee.in</a>
+    <div class="contact-email">
+      <strong>Email:</strong> 
+      <a href="mailto:mohamedkasim@iitb.ac.in">mohamedkasim@iitb.ac.in</a><br>
+      <strong>General Inquiries:</strong> 
+      <a href="mailto:gis@fossee.in">gis@fossee.in</a>
     </div>
 
-</div>
+  </div>
 </div>
 <!-- End of contact us Section -->
 
 <!-- floating social media section -->
 <div class="social-sidebar">
-  <a href="https://www.facebook.com/FOSSEENMEICT/" target="_blank"><img src="{{ directory }}/images/facebook.png" alt="Facebook"></a>
-  <a href="https://www.instagram.com/fossee_nmeict/" target="_blank"><img src="{{ directory }}/images/instagram.png" alt="Instagram"></a>
-  <a href="https://twitter.com/FOSSEE/" target="_blank"><img src="{{ directory }}/images/x.png" alt="Twitter"></a>
-  <a href="https://www.linkedin.com/company/fossee-iitb/" target="_blank"><img src="{{ directory }}/images/linkedin.png" alt="LinkedIn"></a>
+  {% if facebook_icon_url %}
+    <a href="https://www.facebook.com/FOSSEENMEICT/" target="_blank">
+      <img src="{{ facebook_icon_url }}" alt="Facebook">
+    </a>
+  {% endif %}
+
+  {% if instagram_icon_url %}
+    <a href="https://www.instagram.com/fossee_nmeict/" target="_blank">
+      <img src="{{ instagram_icon_url }}" alt="Instagram">
+    </a>
+  {% endif %}
+
+  {% if twitter_icon_url %}
+    <a href="https://twitter.com/FOSSEE/" target="_blank">
+      <img src="{{ twitter_icon_url }}" alt="Twitter">
+    </a>
+  {% endif %}
+
+  {% if linkedin_icon_url %}
+    <a href="https://www.linkedin.com/company/fossee-iitb/" target="_blank">
+      <img src="{{ linkedin_icon_url }}" alt="LinkedIn">
+    </a>
+  {% endif %}
 </div>
-
   </main>
-
+</div>
 
 <!-- footer -->
-
 {% if page.footer %}
-  <footer class="site-footer" style="background-color: #007bff; color: white; padding: 40px; font-family: 'Times New Roman', Times, serif;">
-  <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-
-    <!-- About Column -->
-    <div style="line-height: 1.4;">
-      <h3 style="margin: 0 0 6px 0; font-size: 15px;">About</h3>
-      <p style="margin: 2px 0; font-size: 12px;"><a href="https://fossee.in/" style="color: black; text-decoration: none;">FOSSEE</a></p>
-      <p style="margin: 2px 0; font-size: 12px;"><a href="https://spoken-tutorial.org/" style="color: black; text-decoration: none;">Spoken Tutorial</a></p>
-    </div>
-
-    <!-- Resources Column -->
-    <div style="line-height: 1.4;">
-      <h3 style="margin: 0 0 6px 0; font-size: 15px;">Resources</h3>
-      <p style="margin: 2px 0; font-size: 12px;"><a href="https://qgis.org/en/site/forusers/download.html" style="color: black; text-decoration: none;">QGIS</a></p>
-      <p style="margin: 2px 0; font-size: 12px;"><a href="https://spoken-tutorial.org/tutorial-search/?search_foss=QGIS&search_language=English " style="color: black; text-decoration: none;">Spoken Tutorials - FOSSEE - QGIS</a></p>
-    </div>
-
-    <!-- License Column -->
-    <div style="max-width: 400px;">
-      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
-        <img alt="Creative Commons License" style="border-width:0; vertical-align: middle;" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
-      </a>
-      <span style="color: black; display: inline-block; vertical-align: middle; margin-left: 10px; font-size: 10px;">
-        This work is licensed under a 
-        <a style="color: black; text-decoration: underline;" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
-          Creative Commons Attribution-ShareAlike 4.0 International License
-        </a>.
-      </span>
-    </div>
+  <footer class="mapathon-footer" id="custom-footer">
+    {{ page.footer }}
   </footer>
 {% endif %}
-</div>
+
+
 
 {% if page.navigation %}
   <div class="navigation region">

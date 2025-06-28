@@ -1,64 +1,51 @@
-(function ($, Drupal) {
-  Drupal.behaviors.iitbPopup = {
-    attach: function (context, settings) {
-      console.log("Popup behavior attached");
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("✅ DOM Ready");
 
-      // ✅ Popup open
-      $('.open-popup', context).once('open-popup').on('click', function (e) {
-        e.preventDefault();
-        $('#registration-popup', context)
-          .css('display', 'flex')
-          .hide()
-          .fadeIn();
-      });
+  // === Popup Modal Logic ===
+  const trigger = document.querySelector(".open-popup");
+  const modal = document.getElementById("popupModal");
 
-      // ✅ Popup close (X)
-      $('.close-btn', context).once('close-popup').on('click', function () {
-        $('#registration-popup', context).fadeOut(function () {
-          $(this).css('display', 'none');
+  if (trigger && modal) {
+    const close = modal.querySelector(".close-btn");
+
+    trigger.addEventListener("click", function (e) {
+      e.preventDefault();
+      console.log("📌 Opening popup");
+      modal.style.display = "flex";
+    });
+
+    close.addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+
+    modal.addEventListener("click", function (e) {
+      const content = modal.querySelector(".popup-content");
+      if (!content.contains(e.target)) {
+        modal.style.display = "none";
+      }
+    });
+  }
+
+  // === Theme Tabs Toggle Logic ===
+  const tabs = document.querySelectorAll(".theme-tabs .tab");
+  const contents = document.querySelectorAll(".theme-tabs .tab-content");
+
+  if (tabs.length > 0 && contents.length > 0) {
+    tabs.forEach(tab => {
+      tab.addEventListener("click", function () {
+        // Activate tab
+        tabs.forEach(t => t.classList.remove("active"));
+        this.classList.add("active");
+
+        // Show corresponding content
+        const selectedId = this.getAttribute("data-tab");
+        contents.forEach(content => {
+          content.classList.remove("visible");
+          if (content.id === selectedId) {
+            content.classList.add("visible");
+          }
         });
       });
-
-      // ✅ Close popup when clicking outside
-      $(window).once('popup-outside').on('click', function (e) {
-        const popup = $('#registration-popup .popup-content');
-        if (!popup.is(e.target) && popup.has(e.target).length === 0) {
-          $('#registration-popup', context).fadeOut(function () {
-            $(this).css('display', 'none');
-          });
-        }
-      });
-
-      // ✅ Tabs for Mapathon Themes
-      $('.theme-tabs .tab', context).once('theme-tabs').on('click', function () {
-        const $tab = $(this);
-        const selectedTab = $tab.data('tab');
-
-        // Toggle tab active class
-        $tab.addClass('active').siblings().removeClass('active');
-
-        // Toggle content visibility
-        $('.theme-tabs .tab-content', context)
-          .removeClass('visible')
-          .filter('#' + selectedTab)
-          .addClass('visible');
-      });
-
-      // ✅ Sticky Menu on Scroll
-      if (!context.querySelector('.menu-bar').classList.contains('menu-sticky-initialized')) {
-        const menu = context.querySelector('.menu-bar');
-        if (menu) {
-          const menuOffset = menu.offsetTop;
-          window.addEventListener('scroll', function () {
-            if (window.pageYOffset > menuOffset) {
-              menu.classList.add('menu-fixed');
-            } else {
-              menu.classList.remove('menu-fixed');
-            }
-          });
-          menu.classList.add('menu-sticky-initialized'); // Prevents multiple bindings
-        }
-      }
-    }
-  };
-})(jQuery, Drupal);
+    });
+  }
+});
