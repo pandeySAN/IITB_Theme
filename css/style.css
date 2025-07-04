@@ -78,13 +78,15 @@ html {
 }
 
 main.main-content {
-  padding-top: 60px; /* should be slightly more than menu height */
+  padding-top: 0;
 }
 
 .hero-overlay {
   position: relative;
   width: 100vw;
   overflow: hidden;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .hero-overlay .bg-image {
@@ -192,7 +194,7 @@ main.main-content {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 40px;
+  padding: 10px 40px 40px;
   background-color: #ffffff;
   font-family: "Georgia", serif;
   gap: 40px;
@@ -1045,3 +1047,5 @@ svg {
     margin-top: 20px;
   }
 }
+
+

@@ -15,3 +15,7 @@ regions:
   footer: 'Footer'
   page_top: 'Page Top'
   page_bottom: 'Page Bottom'
+  primary_menu: 'Primary menu'
+
+layout_builder:
+  enabled: true

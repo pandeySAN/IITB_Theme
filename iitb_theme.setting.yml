@@ -1,0 +1,4 @@
+process_flow_base_url:
+  type: textfield
+  label: 'Base Image URL'
+  description: 'http://localhost/drupal/sites/default/files/2025-06/'
