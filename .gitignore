@@ -1,0 +1,12 @@
+/vendor/
+core/
+sites/default/files/
+sites/default/settings.php
+sites/default/settings.local.php
+sites/simpletest/
+/.env
+*.log
+*.sqlite
+*.tar.gz
+*.zip
+config/sync/*.yml~

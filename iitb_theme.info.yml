@@ -1,0 +1,21 @@
+name: IITB Theme
+type: theme
+core_version_requirement: ^10 || ^11
+base theme: classy
+
+libraries:
+  - iitb_theme/global-styling
+
+regions:
+  top_logos: 'Top Logos'
+  header: 'Menu Bar'
+  logo: 'Logo Area'
+  hero: 'Hero / Slider Section'
+  content: 'Main Content'
+  footer: 'Footer'
+  page_top: 'Page Top'
+  page_bottom: 'Page Bottom'
+  primary_menu: 'Primary menu'
+
+layout_builder:
+  enabled: true

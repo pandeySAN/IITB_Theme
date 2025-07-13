@@ -1,0 +1,1052 @@
+/* ===== Global Styles ===== */
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  background-color: #fffaf0;
+  line-height: 1.6;
+}
+
+/* ===== Top Logos Section ===== */
+.region-top-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+}
+
+.region-top-logos img {
+  max-height: 100px;
+  height: 50px;
+  width: 80px;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  .region-top-logos {
+    gap: 6px;
+  }
+
+  .region-top-logos img {
+    max-height: 40px;
+  }
+}
+
+/* ===== Menu Bar ===== */
+.menu-bar {
+  position: relative; /* <- Start as normal */
+  top: 0;
+  width: 100%;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  padding: 0;
+  margin: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #ccc;
+}
+
+.menu-bar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.menu-bar a:hover {
+  background-color: #ec2922;
+  border-radius: 4px;
+}
+
+.menu-fixed {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+main.main-content {
+  padding-top: 0;
+}
+
+/* hero section */
+.hero-overlay {
+  position: relative;
+  width: 100vw;
+  overflow: hidden;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.hero-overlay .bg-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.hero-overlay .overlay-image {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 50%;
+  max-width: 800px;
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-overlay .overlay-clickhere-image {
+  position: absolute;
+  top: 280px;
+  left: 210px;
+  width: 14%;
+  max-width: 250px;
+  height: 75px;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.hero-overlay .overlay-regi-image {
+  position: absolute;
+  top: 355px;
+  left: 125px;
+  width: 15%;
+  max-width: 200px;
+  height: auto;
+  z-index: 4;
+  cursor: pointer;
+}
+
+.hero-overlay .bubble-gif {
+  position: absolute;
+  top: 355px;
+  left: 330px;
+  width: 15%;
+  max-width: 300px;
+  height: 45px;
+  z-index: 5;
+  opacity: 0.85;
+  cursor: pointer;
+}
+
+/* ===== Popup Styles ===== */
+.popup-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-modal.visible {
+  display: flex; /* show only when active */
+}
+
+.popup-content {
+  position: relative;
+  background: white;
+  padding: 20px;
+  max-width: 600px;
+  width: 90%;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.popup-map-image {
+  max-width: 500px;
+  width: 400px;
+  height: 500px;
+  border-radius: 6px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #444;
+  cursor: pointer;
+}
+
+
+/* ===== Mapathon About + Social Section Wrapper ===== */
+.mapathon-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 40px 40px;
+  background-color: #ffffff;
+  font-family: "Georgia", serif;
+  gap: 40px;
+}
+
+/* ===== About Section ===== */
+.mapathon-about {
+  flex: 1 1 60%;
+}
+
+.mapathon-about h3 {
+  color: #007bff;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.mapathon-about hr {
+  border: none;
+  height: 2px;
+  background-color: red;
+  width: 50%;
+  margin-left: 0;
+  margin-bottom: 20px;
+}
+
+.mapathon-about p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #333;
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
+/* ===== Social Media Section ===== */
+.mapathon-social {
+  flex: 1 1 35%;
+}
+
+.mapathon-social h3 {
+  color: #007bff;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.mapathon-social hr {
+  border: none;
+  height: 2px;
+  background-color: red;
+  width: 50%;
+  margin-left: 0;
+  margin-bottom: 20px;
+}
+
+.twitter-embed {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.twitter-embed a {
+  color: #1da1f2;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .mapathon-wrapper {
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+
+  .mapathon-about,
+  .mapathon-social {
+    flex: 1 1 100%;
+  }
+
+  .mapathon-social {
+    margin-top: 30px;
+  }
+}
+
+
+/* ===== Registration Section ===== */
+/* ===== Registration Section Styling ===== */
+.registration-section {
+  background-color: #ffffff;
+  text-align: center;
+  border-top: 1px solid #e60000;
+  border-bottom: 1px solid #e60000;
+  font-family: "Times New Roman", Times, serif;
+  margin: 0 auto;
+  max-width: auto;
+  box-sizing: border-box;
+}
+
+/* Block title inside registration section */
+.registration-section h2 {
+  font-size: 18px;
+  color: #75baff;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #75baff;
+  padding-bottom: 6px;
+  display: inline-block;
+}
+
+/* Paragraph styling */
+.registration-section p {
+  font-size: 14px;
+  color: #000000;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+/* Register button inside the content block */
+.registration-section .register-btn {
+  background: #75b7ff;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px 30px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-family: "Times New Roman", Times, serif;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+  margin-top: 10px;
+}
+
+.registration-section .register-btn:hover {
+  background: #0056b3;
+  box-shadow: 0 10px 25px rgba(63, 156, 255, 0.4);
+}
+
+
+/* ===== Important Dates Section ===== */
+.important-dates-section {
+  background-color: #fff;
+  padding: 40px 30px 10px; /* ⬅ bottom padding reduced */
+  font-family: 'Georgia', serif;
+  margin-bottom: 0;
+}
+
+.important-dates-section h2 {
+  font-size: 22px;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.important-dates-section hr {
+  border: none;
+  height: 2px;
+  background-color: red;
+  width: 30%;
+  margin: 0 0 20px 0;
+}
+
+.important-dates-wrapper {
+  overflow-x: auto;
+  margin-bottom: 0;
+}
+
+.dates-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  color: #333;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.dates-table td {
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+}
+
+.dates-table td:first-child {
+  font-weight: bold;
+  color: #222;
+  width: 60%;
+}
+
+.dates-table td:last-child {
+  text-align: right;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .dates-table td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .important-dates-section h2 {
+    font-size: 18px;
+  }
+}
+
+/* ===== GIS Mandates Section ===== */
+.mapathon-gis-mandates {
+  font-family: "Times New Roman", Times, serif;
+  padding: 25px 30px 20px;
+  background-color: #ffffff;
+  margin-top: 0; /* ⬅ removed gap above */
+  margin-bottom: 0;
+}
+
+.mapathon-gis-mandates h2 {
+  font-size: 22px;
+  color: #51a5ff;
+  margin-bottom: 10px;
+  border-bottom: 2px solid red;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.mapathon-gis-mandates p,
+.mapathon-gis-mandates ul li {
+  font-size: 15px;
+  color: #222;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.mapathon-gis-mandates ul {
+  list-style-type: disc;
+  padding-left: 25px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.mapathon-gis-mandates strong {
+  color: #0056b3;
+}
+
+.mapathon-gis-mandates em {
+  font-style: italic;
+  color: #444;
+}
+
+@media (max-width: 768px) {
+  .mapathon-gis-mandates {
+    padding: 20px 15px;
+  }
+
+  .mapathon-gis-mandates h2 {
+    font-size: 18px;
+  }
+
+  .mapathon-gis-mandates p,
+  .mapathon-gis-mandates ul li {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+}
+
+/* ===== Partners and Organisers Section ===== */
+.mapathon-partners,
+#partner,
+#partner * {
+  background-color: #ffffff;
+  border: none;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.mapathon-partners {
+  padding: 40px 20px;
+  margin: 0;
+}
+
+.mapathon-partners h2 {
+  font-size: 26px;
+  color: #50a7ff;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.partner-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.partner-logos img {
+  height: 40px;
+  object-fit: contain;
+  background: transparent;
+}
+
+
+
+/* ===== Knowledge Partners Section ===== */
+.mapathon-knowledge-partners,
+#knowledge-partners,
+#knowledge-partners * {
+  background-color: #ffffff !important;
+  border: none !important;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.mapathon-knowledge-partners {
+  padding: 40px 20px;
+  margin: 0;
+}
+
+.mapathon-knowledge-partners h2 {
+  font-size: 26px;
+  color: #007bff;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  display: inline-block;
+  border-bottom: 1px solid red;
+}
+
+.knowledge-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.knowledge-logos img {
+  height: 40px;
+  object-fit: contain;
+  background: transparent;
+}
+
+
+
+/* social side bar */
+.social-sidebar {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%); /* perfectly centers vertically */
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.social-sidebar a {
+  line-height: 0;
+}
+
+.social-sidebar a img {
+  width: 20px;
+  height: 24px;
+  display: block;
+  margin: 0;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.social-sidebar a img:hover {
+  transform: scale(1.1);
+}
+
+
+/* mapathon themes */
+/* ===== Mapathon Themes Section ===== */
+.mapathon-themes {
+  font-family: "Times New Roman", Times, serif;
+  background-color: #fff;
+  padding: 50px 20px;
+}
+
+/* Section Heading */
+.mapathon-themes h2 {
+  font-size: 20px;
+  color: #007bff;
+  margin-bottom: 10px;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+/* ===== Tabs Navigation ===== */
+.theme-tabs .tabs {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.theme-tabs .tab {
+  padding: 10px 18px;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-radius: 4px 4px 0 0;
+}
+
+.theme-tabs .tab.active {
+  background: #e6f0ff;
+  border-color: #007bff;
+  color: #004080;
+  font-weight: 700;
+}
+
+/* ===== Tab Content Area ===== */
+.theme-tabs .tab-content {
+  display: none;
+  padding: 20px 0;
+}
+
+.theme-tabs .tab-content.visible {
+  display: block;
+}
+
+/* ===== Theme Lists ===== */
+.theme-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding-left: 20px;
+}
+
+.theme-columns ul,
+.problem-list {
+  flex: 1 1 300px;
+  list-style: none;
+  padding-left: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #222;
+}
+
+.problem-list {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+/* ===== Responsive Styles ===== */
+@media (max-width: 768px) {
+  .theme-tabs .tabs {
+    flex-direction: column;
+  }
+
+  .theme-tabs .tab {
+    width: 100%;
+    border-radius: 4px;
+    margin-right: 0;
+  }
+
+  .theme-columns {
+    flex-direction: column;
+    gap: 20px;
+    padding-left: 0;
+  }
+}
+
+
+/* ===== Mapathon Process Flow Section ===== */
+.mapathon-process-flow {
+  padding: 40px 20px;
+  background-color: #ffffff;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.process-title {
+  font-size: 20px;
+  color: #0066cc;
+}
+
+.process-table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 12px;
+}
+
+.process-table tr:nth-child(even) {
+  background-color:rgb(255, 255, 255);
+}
+
+.process-table tr:nth-child(odd) {
+  background-color:rgb(243, 242, 242);
+}
+
+.process-table td {
+  padding: 20px;
+  text-align: center;
+}
+
+.process-image-wrapper {
+  margin-top: 30px;
+}
+
+.process-image {
+  width: 100%;
+  max-width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+svg {
+    margin: 10px auto;
+    display: block;
+    font-size: 10px
+  }
+
+/* ===== Eligibility Section ===== */
+.mapathon-eligibility {
+  background-color: #ffffff;
+  font-family: "Times New Roman", Times, serif;
+  padding: 40px 20px;
+  border-top: 2px solid #e60000;
+  border-bottom: 2px solid #e60000;
+  max-width: auto;
+  margin: 0 auto;
+}
+
+.mapathon-eligibility h2 {
+  font-size: 22px;
+  color: #007bff;
+  margin-bottom: 10px;
+  border-bottom: 2px solid red;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+.mapathon-eligibility h3 {
+  font-size: 18px;
+  color: #004080;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.mapathon-eligibility ul.eligibility-list {
+  list-style-type: disc;
+  padding-left: 30px;
+  margin-bottom: 20px;
+}
+
+.mapathon-eligibility ul li {
+  font-size: 15px;
+  color: #222;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.mapathon-eligibility p {
+  font-size: 15px;
+  color: #222;
+  line-height: 1.7;
+  text-align: justify;
+  margin-bottom: 15px;
+}
+
+.mapathon-eligibility .note-box {
+  background-color: #fff8e1;
+  border-left: 4px solid #ffa000;
+  padding: 10px 15px;
+  margin: 20px 0;
+  font-style: italic;
+  color: #5c4b00;
+  border-radius: 4px;
+}
+
+
+/* ===== Mapathon Organizing Team Section ===== */
+.mapathon-team {
+  background-color: #f9f9f9;
+  font-family: "Times New Roman", Times, serif;
+  padding: 50px 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  text-align: center;
+}
+
+/* Section Title */
+.mapathon-team .team-title {
+  font-size: 24px;
+  color: #007bff;
+  margin-bottom: 12px;
+  padding-left: 8px;
+  border-bottom: 2px solid red;
+  display: inline-block;
+}
+
+/* Team Container */
+.team-container {
+  margin-top: 30px;
+}
+
+/* Team Info Blocks */
+.team-block {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+.team-label {
+  font-weight: bold;
+  font-size: 15px;
+  color: #d00000;
+  margin-bottom: 5px;
+}
+
+.team-institute {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+}
+
+.team-subtext {
+  font-size: 13px;
+  color: #444;
+  margin-top: 4px;
+}
+
+/* Member Cards Layout */
+.team-members {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* Card Styles */
+.member-card {
+  background-color: #fff;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  width: 300px;
+  text-align: left;
+  transition: all 0.2s ease-in-out;
+}
+
+.member-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Wide Variant (optional use) */
+.member-card.wide {
+  width: 630px;
+}
+
+.member-card.narrow {
+  width: 300px;
+}
+
+/* Member Info */
+.member-name {
+  font-weight: bold;
+  color: #0056b3;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.member-details {
+  font-size: 14px;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* Divider inside card (for stacked names) */
+.member-card hr {
+  margin: 10px 0;
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+  .team-members {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .member-card,
+  .member-card.wide,
+  .member-card.narrow {
+    width: 90%;
+  }
+
+  .mapathon-team .team-title {
+    font-size: 20px;
+  }
+}
+
+/* contact-us */
+.mapathon-contact {
+  background-color: #ffffff;
+  padding: 40px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.contact-heading {
+  color: #007bff;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.section-divider {
+  border: none;
+  height: 2px;
+  background-color: red;
+  width: 50%;
+  margin-left: 0;
+  margin-bottom: 20px;
+}
+
+.contact-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+}
+
+.contact-role {
+  font-size: 14px;
+  color: #000;
+  margin-top: 5px;
+  line-height: 1.6;
+}
+
+.contact-email {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.contact-email a {
+  color: #000;
+  text-decoration: underline;
+}
+
+/* social media */
+.social-sidebar {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+  padding: 10px;
+}
+
+.social-sidebar img {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+}
+
+.social-sidebar a:hover img {
+  transform: scale(1.1);
+}
+
+/* ===== Mapathon Footer Styling (Compact Height) ===== */
+.mapathon-footer {
+  background-color: #007bff;
+  padding: 20px 20px; /* Reduced from 40px */
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+  color: #fff;
+  border-top: 2px solid #ccc;
+}
+
+.mapathon-footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.mapathon-footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1100px;
+  margin: 0 auto;
+  gap: 20px; /* Reduced from 40px */
+}
+
+.footer-column {
+  flex: 1 1 200px;
+}
+
+.footer-column h3 {
+  font-size: 15px;
+  margin-bottom: 6px; /* Reduced spacing */
+  color: #ffffff;
+}
+
+/* License section */
+.footer-license {
+  flex: 1 1 100%;
+  margin-top: 10px; /* Reduced from 20px */
+  text-align: right;
+  font-size: 12px; /* Slightly smaller text */
+  color: #e6e6e6;
+}
+
+.footer-license img {
+  vertical-align: middle;
+  margin-right: 6px;
+  height: 22px; /* Optional: reduce image height */
+}
+
+.footer-license a {
+  color: #e6e6e6;
+  text-decoration: none;
+}
+
+.footer-license a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-wrapper {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-column {
+    flex: 1 1 100%;
+  }
+
+  .footer-license {
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+
+

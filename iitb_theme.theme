@@ -1,0 +1,191 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_system_theme_settings_alter().
+ */
+function iitb_theme_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+
+  // Top Logo URLs (multiple, one per line)
+  $form['top_logo_urls'] = [
+    '#type' => 'textarea',
+    '#title' => t('Top Logo URLs'),
+    '#description' => t('Paste public URLs of top logo images, one per line.'),
+    '#default_value' => theme_get_setting('top_logo_urls'),
+  ];
+
+  // Navbar Background Color
+  $form['navbar_background'] = [
+    '#type' => 'color',
+    '#title' => t('Navigation Bar Background Color'),
+    '#description' => t('Choose a background color for the top navigation bar.'),
+    '#default_value' => theme_get_setting('navbar_background') ?: '#1e1e1e',
+  ];
+
+  // Hero Background Image
+  $form['hero_image_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('Hero Background Image URL'),
+    '#description' => t('Enter the full URL to the hero section background image (e.g., a map).'),
+    '#default_value' => theme_get_setting('hero_image_url'),
+  ];
+
+  // Optional: Add overlay/logo/button images for hero section
+  $form['hero_overlay_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('Hero Overlay Image URL'),
+    '#description' => t('Enter the full URL of the overlay image (e.g., logo over hero).'),
+    '#default_value' => theme_get_setting('hero_overlay_url'),
+  ];
+
+  $form['clickhere_button_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('"Click Here" Button Image URL'),
+    '#description' => t('Enter the full URL of the "Click Here" button image.'),
+    '#default_value' => theme_get_setting('clickhere_button_url'),
+  ];
+
+  $form['register_button_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('Register Button Image URL'),
+    '#description' => t('Enter the full URL of the Register button image.'),
+    '#default_value' => theme_get_setting('register_button_url'),
+  ];
+
+  $form['bubble_gif_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('Bubble GIF URL'),
+    '#description' => t('Enter the full URL of the statistics bubble GIF image.'),
+    '#default_value' => theme_get_setting('bubble_gif_url'),
+  ];
+
+  $form['map_image_url'] = [
+  '#type' => 'textfield',
+  '#title' => t('Map Image URL for Popup'),
+  '#description' => t('Enter the public URL of the map image to display in the popup.'),
+  '#default_value' => theme_get_setting('map_image_url'),
+];
+
+$form['partner_logo_urls'] = [
+    '#type' => 'textarea',
+    '#title' => t('Partners and Organisers Logo URLs'),
+    '#description' => t('Enter public URLs for partner logos, one per line.'),
+    '#default_value' => theme_get_setting('partner_logo_urls'),
+  ];
+
+  // Knowledge Partner Logo URLs
+  $form['knowledge_logo_urls'] = [
+    '#type' => 'textarea',
+    '#title' => t('Knowledge Partners Logo URLs'),
+    '#description' => t('Enter public URLs for knowledge partner logos, one per line.'),
+    '#default_value' => theme_get_setting('knowledge_logo_urls'),
+  ];
+
+// social media
+$form['social_media'] = [
+  '#type' => 'details',
+  '#title' => t('Social Media Icons'),
+  '#open' => TRUE,
+];
+
+$form['social_media']['facebook_icon_url'] = [
+  '#type' => 'textfield',
+  '#title' => t('Facebook Icon URL'),
+  '#default_value' => theme_get_setting('facebook_icon_url'),
+];
+
+$form['social_media']['instagram_icon_url'] = [
+  '#type' => 'textfield',
+  '#title' => t('Instagram Icon URL'),
+  '#default_value' => theme_get_setting('instagram_icon_url'),
+];
+
+$form['social_media']['twitter_icon_url'] = [
+  '#type' => 'textfield',
+  '#title' => t('X (Twitter) Icon URL'),
+  '#default_value' => theme_get_setting('twitter_icon_url'),
+];
+
+$form['social_media']['linkedin_icon_url'] = [
+  '#type' => 'textfield',
+  '#title' => t('LinkedIn Icon URL'),
+  '#default_value' => theme_get_setting('linkedin_icon_url'),
+];
+
+$form['process_flow_image_url'] = [
+  '#type' => 'textfield',
+  '#title' => t('Process Flow Image URL'),
+  '#description' => t('Enter the full URL to the Process Flow image.'),
+  '#default_value' => theme_get_setting('process_flow_image_url'),
+];
+
+  // Attach submit handler
+  $form['#submit'][] = 'iitb_theme_theme_settings_submit';
+}
+
+/**
+ * Submit handler for saving theme settings.
+ */
+function iitb_theme_theme_settings_submit($form, FormStateInterface $form_state) {
+  $config = \Drupal::configFactory()->getEditable('iitb_theme.settings');
+
+  $config->set('top_logo_urls', $form_state->getValue('top_logo_urls'));
+  $config->set('navbar_background', $form_state->getValue('navbar_background'));
+  $config->set('hero_image_url', $form_state->getValue('hero_image_url'));
+  $config->set('hero_overlay_url', $form_state->getValue('hero_overlay_url'));
+  $config->set('clickhere_button_url', $form_state->getValue('clickhere_button_url'));
+  $config->set('register_button_url', $form_state->getValue('register_button_url'));
+  $config->set('bubble_gif_url', $form_state->getValue('bubble_gif_url'));
+  $config->set('map_image_url', $form_state->getValue('map_image_url'));
+  $config->set('partner_logo_urls', $form_state->getValue('partner_logo_urls'));
+  $config->set('knowledge_logo_urls', $form_state->getValue('knowledge_logo_urls'));
+  $config->set('facebook_icon_url', $form_state->getValue('facebook_icon_url'));
+  $config->set('instagram_icon_url', $form_state->getValue('instagram_icon_url'));
+  $config->set('twitter_icon_url', $form_state->getValue('twitter_icon_url'));
+  $config->set('linkedin_icon_url', $form_state->getValue('linkedin_icon_url'));
+  $config->set('process_flow_image_url', $form_state->getValue('process_flow_image_url'));
+
+
+
+  $config->save();
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function iitb_theme_preprocess_page(array &$variables) {
+  $config = \Drupal::config('iitb_theme.settings');
+
+  // Parse and pass top logo URLs
+  $urls = $config->get('top_logo_urls') ?: '';
+  $variables['top_logo_urls'] = array_filter(array_map('trim', explode("\n", $urls)));
+
+  // Navbar color
+  $variables['navbar_background'] = $config->get('navbar_background') ?: '#1e1e1e';
+
+  // Hero section assets
+$variables['hero_image_url'] = theme_get_setting('hero_image_url');
+$variables['hero_overlay_url'] = theme_get_setting('hero_overlay_url');
+$variables['clickhere_button_url'] = theme_get_setting('clickhere_button_url');
+$variables['register_button_url'] = theme_get_setting('register_button_url');
+$variables['bubble_gif_url'] = theme_get_setting('bubble_gif_url');
+$variables['map_image_url'] = theme_get_setting('map_image_url');
+$variables['facebook_icon_url'] = theme_get_setting('facebook_icon_url');
+$variables['instagram_icon_url'] = theme_get_setting('instagram_icon_url');
+$variables['twitter_icon_url'] = theme_get_setting('twitter_icon_url');
+$variables['linkedin_icon_url'] = theme_get_setting('linkedin_icon_url');
+
+// partner urls
+ $partner_urls = explode("\n", theme_get_setting('partner_logo_urls'));
+  $variables['partner_logo_urls'] = array_map('trim', array_filter($partner_urls));
+
+// knowledge partner
+  $knowledge_urls = explode("\n", theme_get_setting('knowledge_logo_urls'));
+  $variables['knowledge_logo_urls'] = array_map('trim', array_filter($knowledge_urls));
+
+// process flow
+$variables['process_flow_image_url'] = theme_get_setting('process_flow_image_url');
+
+
+}
