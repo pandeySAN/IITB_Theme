@@ -65,134 +65,6 @@
 
     {# You can keep static blocks below or eventually move them to layout builder blocks #}
 
-    <!-- Partners and Organisers Section -->
-    {% if partner_logo_urls is not empty %}
-      <section class="mapathon-partners" id="partner">
-        <h2>Partners and Organisers</h2>
-        <hr style="border: none; height: 1px; background-color: red; width: 30%; margin-left: 0;">
-        <div class="partner-logos">
-          {% for logo in partner_logo_urls %}
-            <img src="{{ logo }}" alt="Partner Logo">
-          {% endfor %}
-        </div>
-      </section>
-    {% endif %}
-
-    <!-- Knowledge Partners Section -->
-    {% if knowledge_logo_urls is not empty %}
-      <section class="mapathon-knowledge-partners" id="knowledge-partners">
-        <h2>Knowledge Partners</h2>
-        <hr style="border: none; height: 1px; background-color: red; width: 30%; margin-left: 0;">
-        <div class="knowledge-logos">
-          {% for logo in knowledge_logo_urls %}
-            <img src="{{ logo }}" alt="Knowledge Partner Logo">
-          {% endfor %}
-        </div>
-      </section>
-    {% endif %}
-
-    <!-- Mapathon Process Flow -->
-    <div class="mapathon-process-flow">
-      <h2 class="process-title">Mapathon Process Flow</h2>
-      <hr style="border: none; height: 2px; background-color: red; width: 50%; margin-left: 0;">
-      <table class="process-table">
-        <tr><td><strong>Registration</strong><br/>Mandatory</td></tr>
-        <tr>
-          <td style="text-align: center;">
-            <svg width="20" height="30" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="50" cy="75" rx="30" ry="60" stroke="#6c757d" stroke-width="2" fill="none"/>
-              <line x1="50" y1="50" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-              <line x1="40" y1="85" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-              <line x1="60" y1="85" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-            </svg>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>Confirmation</strong><br/>Eligible teams will get a link to upload submissions</td>
-        </tr>
-        <tr><td style="text-align: center;">
-            <svg width="20" height="30" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="50" cy="75" rx="30" ry="60" stroke="#6c757d" stroke-width="2" fill="none"/>
-              <line x1="50" y1="50" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-              <line x1="40" y1="85" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-              <line x1="60" y1="85" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-            </svg>
-          </td></tr>
-        <tr>
-          <td><strong>Submission</strong><br/>Upload map data</td>
-        </tr>
-        <tr><td style="text-align: center;">
-            <svg width="20" height="30" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="50" cy="75" rx="30" ry="60" stroke="#6c757d" stroke-width="2" fill="none"/>
-              <line x1="50" y1="50" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-              <line x1="40" y1="85" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-              <line x1="60" y1="85" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-            </svg>
-          </td></tr>
-        <tr><td><strong>Evaluation</strong><br/>By FOSSEE GIS Experts</td></tr>
-        <tr><td style="text-align: center;">
-            <svg width="20" height="30" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="50" cy="75" rx="30" ry="60" stroke="#6c757d" stroke-width="2" fill="none"/>
-              <line x1="50" y1="50" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-              <line x1="40" y1="85" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-              <line x1="60" y1="85" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-            </svg>
-          </td></tr>
-        <tr><td><strong>Declaration of Results</strong><br/>Top submissions announced</td></tr>
-        <tr><td style="text-align: center;">
-            <svg width="20" height="30" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="50" cy="75" rx="30" ry="60" stroke="#6c757d" stroke-width="2" fill="none"/>
-              <line x1="50" y1="50" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-              <line x1="40" y1="85" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-              <line x1="60" y1="85" x2="50" y2="95" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
-            </svg>
-          </td></tr>
-        <tr><td><strong>Internship Eligibility</strong><br/>Top 50 individuals</td></tr>
-      </table>
-
-      {% if process_flow_image_url %}
-        <div class="process-image-wrapper">
-          <img src="{{ process_flow_image_url }}" alt="Mapathon Process Flow" class="process-image">
-        </div>
-      {% endif %}
-    </div>
-
-    <!-- Eligibility -->
-    {% if page.content.iitb_theme_eligibility %}
-      <section class="mapathon-eligibility" id="eligibility">
-        {{ page.content.iitb_theme_eligibility }}
-      </section>
-    {% endif %}
-
-    <!-- Team -->
-    {% if page.content.iitb_theme_organisingteam %}
-      <section class="mapathon-team" id="teams">
-        {{ page.content.iitb_theme_organisingteam }}
-      </section>
-    {% endif %}
-
-    <!-- Contact Us -->
-    <div class="mapathon-contact" id="contact">
-      <div class="contact-container">
-        <h2 class="contact-heading">Contact Us</h2>
-        <hr class="section-divider">
-        <div class="contact-name">Mohamed Kasim Khan</div>
-        <div class="contact-role">
-          National Coordinator - FOSSEE (GIS)<br>
-          Senior Project Research Scientist<br>
-          National Mission on Education through ICT<br>
-          Ministry of Education, Government of India<br>
-          Indian Institute of Technology Bombay
-        </div>
-        <div class="contact-email">
-          <strong>Email:</strong> 
-          <a href="mailto:mohamedkasim@iitb.ac.in">mohamedkasim@iitb.ac.in</a><br>
-          <strong>General Inquiries:</strong> 
-          <a href="mailto:gis@fossee.in">gis@fossee.in</a>
-        </div>
-      </div>
-    </div>
-
     <!-- Social Sidebar -->
     <div class="social-sidebar">
       {% if facebook_icon_url %}
@@ -222,10 +94,11 @@
 
 <!-- Footer -->
 {% if page.footer %}
-  <footer class="mapathon-footer" id="custom-footer">
+  <footer class="mapathon-footer" id="custom-footer" style="background-color: {{ footer_background }};">
     {{ page.footer }}
   </footer>
 {% endif %}
+
 
 {% if page.navigation %}
   <div class="navigation region">

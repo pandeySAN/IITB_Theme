@@ -67,21 +67,6 @@ function iitb_theme_form_system_theme_settings_alter(&$form, FormStateInterface 
   '#default_value' => theme_get_setting('map_image_url'),
 ];
 
-$form['partner_logo_urls'] = [
-    '#type' => 'textarea',
-    '#title' => t('Partners and Organisers Logo URLs'),
-    '#description' => t('Enter public URLs for partner logos, one per line.'),
-    '#default_value' => theme_get_setting('partner_logo_urls'),
-  ];
-
-  // Knowledge Partner Logo URLs
-  $form['knowledge_logo_urls'] = [
-    '#type' => 'textarea',
-    '#title' => t('Knowledge Partners Logo URLs'),
-    '#description' => t('Enter public URLs for knowledge partner logos, one per line.'),
-    '#default_value' => theme_get_setting('knowledge_logo_urls'),
-  ];
-
 // social media
 $form['social_media'] = [
   '#type' => 'details',
@@ -113,15 +98,16 @@ $form['social_media']['linkedin_icon_url'] = [
   '#default_value' => theme_get_setting('linkedin_icon_url'),
 ];
 
-$form['process_flow_image_url'] = [
-  '#type' => 'textfield',
-  '#title' => t('Process Flow Image URL'),
-  '#description' => t('Enter the full URL to the Process Flow image.'),
-  '#default_value' => theme_get_setting('process_flow_image_url'),
-];
-
   // Attach submit handler
   $form['#submit'][] = 'iitb_theme_theme_settings_submit';
+
+  $form['footer_background'] = [
+    '#type' => 'color',
+    '#title' => t('Footer Background Color'),
+    '#description' => t('Choose a background color for the footer section.'),
+    '#default_value' => theme_get_setting('footer_background') ?: '#f5f5f5',
+  ];
+
 }
 
 /**
@@ -138,14 +124,10 @@ function iitb_theme_theme_settings_submit($form, FormStateInterface $form_state)
   $config->set('register_button_url', $form_state->getValue('register_button_url'));
   $config->set('bubble_gif_url', $form_state->getValue('bubble_gif_url'));
   $config->set('map_image_url', $form_state->getValue('map_image_url'));
-  $config->set('partner_logo_urls', $form_state->getValue('partner_logo_urls'));
-  $config->set('knowledge_logo_urls', $form_state->getValue('knowledge_logo_urls'));
   $config->set('facebook_icon_url', $form_state->getValue('facebook_icon_url'));
   $config->set('instagram_icon_url', $form_state->getValue('instagram_icon_url'));
   $config->set('twitter_icon_url', $form_state->getValue('twitter_icon_url'));
   $config->set('linkedin_icon_url', $form_state->getValue('linkedin_icon_url'));
-  $config->set('process_flow_image_url', $form_state->getValue('process_flow_image_url'));
-
 
 
   $config->save();
@@ -176,16 +158,10 @@ $variables['instagram_icon_url'] = theme_get_setting('instagram_icon_url');
 $variables['twitter_icon_url'] = theme_get_setting('twitter_icon_url');
 $variables['linkedin_icon_url'] = theme_get_setting('linkedin_icon_url');
 
-// partner urls
- $partner_urls = explode("\n", theme_get_setting('partner_logo_urls'));
-  $variables['partner_logo_urls'] = array_map('trim', array_filter($partner_urls));
+// Load theme config
+  $config = \Drupal::config('iitb_theme.settings');
 
-// knowledge partner
-  $knowledge_urls = explode("\n", theme_get_setting('knowledge_logo_urls'));
-  $variables['knowledge_logo_urls'] = array_map('trim', array_filter($knowledge_urls));
-
-// process flow
-$variables['process_flow_image_url'] = theme_get_setting('process_flow_image_url');
-
+  // Pass footer background color to Twig template
+  $variables['footer_background'] = $config->get('footer_background') ?: '#f5f5f5';
 
 }

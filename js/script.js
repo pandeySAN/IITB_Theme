@@ -48,5 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (contentToShow) contentToShow.classList.add("visible");
       });
     });
+
+    tabs[0].classList.add("active");
+    contents[0].classList.add("visible");
   }
 });

@@ -19,3 +19,5 @@ regions:
 
 layout_builder:
   enabled: true
+
+php: iitb_theme.theme
