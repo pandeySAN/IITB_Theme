@@ -457,70 +457,52 @@ main.main-content {
 }
 
 /* ===== Common Section Styles ===== */
-.mapathon-partners,
-.mapathon-knowledge-partners {
-  background-color: #ffffff;
-  padding: 40px 20px;
+
+/* Section container */
+.partner-section {
+  background-color: white;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* Headings aligned to left */
+.partner-section h2 {
+  font-size: 18px;
+  color: #007bff;
   font-family: "Times New Roman", Times, serif;
+  margin-top: 0px;
+  margin-bottom: 10px;
   text-align: left;
 }
 
-/* ===== Section Headings ===== */
-.mapathon-partners h2,
-.mapathon-knowledge-partners h2 {
-  font-size: 28px;
-  color: #007bff;
-  padding-left: 20px;
-  margin-bottom: 10px;
-  position: relative;
-  display: inline-block;
-}
-
-.mapathon-partners h2::after,
-.mapathon-knowledge-partners h2::after {
+/* Red underline below headings */
+.partner-section h2::after {
   content: "";
   display: block;
-  height: 3px;
-  background-color: red;
+  width: 450px;
+  border-bottom: 2px solid red;
   margin-top: 5px;
-  width: 100%;
+  background-color: white
 }
 
-/* ===== Logos Container ===== */
-.partner-logos,
-.knowledge-logos {
+/* Partner logos centered */
+.partner-logos-grid,
+.knowledge-partner-logos-grid {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  justify-content: center; /* 👈 Center the logos horizontally */
   align-items: center;
-  gap: 0;
-  padding: 0 20px;
-}
-
-/* ===== Logo Images ===== */
-.partner-logos img,
-.knowledge-logos img {
-  max-height: 100px;
-  object-fit: contain;
-  background: transparent;
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-
-/* Fix spacing if logos are inside a <p> */
-.mapathon-partners p,
-.mapathon-partners p img {
-  margin: 0;
-  padding: 0;
-}
-
-.mapathon-partners p {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   gap: 30px;
-  margin-top: 20px;
+  padding: 10px 0;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+/* Logo size control */
+.partner-logos-grid img,
+.knowledge-partner-logos-grid img {
+  max-height: 60px;
+  object-fit: contain;
 }
 
 

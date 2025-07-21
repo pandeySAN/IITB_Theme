@@ -2,3 +2,14 @@ process_flow_base_url:
   type: textfield
   label: 'Base Image URL'
   description: 'http://localhost/drupal/sites/default/files/2025-06/'
+
+hero_image_fid: []
+hero_overlay_fid: []
+clickhere_button_fid: []
+register_button_fid: []
+bubble_gif_fid: []
+map_image_fid: []
+facebook_icon_fid: []
+instagram_icon_fid: []
+twitter_icon_fid: []
+linkedin_icon_fid: []

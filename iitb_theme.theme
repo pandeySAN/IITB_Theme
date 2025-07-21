@@ -6,162 +6,167 @@ use Drupal\Core\Form\FormStateInterface;
  * Implements hook_form_system_theme_settings_alter().
  */
 function iitb_theme_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+  $image_fields = [
+    'hero_image_fid' => 'Hero Image',
+    'hero_overlay_fid' => 'Hero Overlay Image',
+    'clickhere_button_fid' => '"Click Here" Button Image',
+    'register_button_fid' => '"Register" Button Image',
+    'bubble_gif_fid' => 'Bubble GIF',
+    'map_image_fid' => 'Map Image',
+    'facebook_icon_fid' => 'Facebook Icon',
+    'instagram_icon_fid' => 'Instagram Icon',
+    'twitter_icon_fid' => 'Twitter Icon',
+    'linkedin_icon_fid' => 'LinkedIn Icon',
 
-  // Top Logo URLs (multiple, one per line)
-  $form['top_logo_urls'] = [
-    '#type' => 'textarea',
-    '#title' => t('Top Logo URLs'),
-    '#description' => t('Paste public URLs of top logo images, one per line.'),
-    '#default_value' => theme_get_setting('top_logo_urls'),
+    // Partner logos
+    'iitb_logo_fid' => 'IIT Bombay Logo',
+    'fossee_logo_fid' => 'FOSSEE Logo',
+    'spoken_logo_fid' => 'Spoken Tutorial Logo',
+    'rudra_logo_fid' => 'Rudra Labs Logo',
+    'iit_tirupati_logo_fid' => 'IIT Tirupati Logo',
+    'navavishkaar_logo_fid' => 'Navavishkaar Logo',
+
+    // Knowledge partners
+    'tn_logo_fid' => 'TN Logo',
+    'nm_icps_logo_fid' => 'NM-ICPS Logo',
   ];
 
-  // Navbar Background Color
+  foreach ($image_fields as $field_name => $title) {
+    $form[$field_name] = [
+      '#type' => 'managed_file',
+      '#title' => t($title),
+      '#upload_location' => 'public://theme_uploads/',
+      '#default_value' => theme_get_setting($field_name),
+      '#upload_validators' => [
+        'file_validate_extensions' => ['png jpg jpeg gif svg webp'],
+      ],
+    ];
+  }
+
+  // Top logos (multiple uploads)
+  $form['top_logo_fids'] = [
+    '#type' => 'managed_file',
+    '#title' => t('Top Logos (Upload multiple logos)'),
+    '#multiple' => TRUE,
+    '#upload_location' => 'public://theme_uploads/',
+    '#default_value' => theme_get_setting('top_logo_fids'),
+    '#upload_validators' => [
+      'file_validate_extensions' => ['png jpg jpeg gif svg webp'],
+    ],
+  ];
+
+  // Color pickers
   $form['navbar_background'] = [
     '#type' => 'color',
-    '#title' => t('Navigation Bar Background Color'),
-    '#description' => t('Choose a background color for the top navigation bar.'),
+    '#title' => t('Navbar Background Color'),
     '#default_value' => theme_get_setting('navbar_background') ?: '#1e1e1e',
   ];
-
-  // Hero Background Image
-  $form['hero_image_url'] = [
-    '#type' => 'textfield',
-    '#title' => t('Hero Background Image URL'),
-    '#description' => t('Enter the full URL to the hero section background image (e.g., a map).'),
-    '#default_value' => theme_get_setting('hero_image_url'),
-  ];
-
-  // Optional: Add overlay/logo/button images for hero section
-  $form['hero_overlay_url'] = [
-    '#type' => 'textfield',
-    '#title' => t('Hero Overlay Image URL'),
-    '#description' => t('Enter the full URL of the overlay image (e.g., logo over hero).'),
-    '#default_value' => theme_get_setting('hero_overlay_url'),
-  ];
-
-  $form['clickhere_button_url'] = [
-    '#type' => 'textfield',
-    '#title' => t('"Click Here" Button Image URL'),
-    '#description' => t('Enter the full URL of the "Click Here" button image.'),
-    '#default_value' => theme_get_setting('clickhere_button_url'),
-  ];
-
-  $form['register_button_url'] = [
-    '#type' => 'textfield',
-    '#title' => t('Register Button Image URL'),
-    '#description' => t('Enter the full URL of the Register button image.'),
-    '#default_value' => theme_get_setting('register_button_url'),
-  ];
-
-  $form['bubble_gif_url'] = [
-    '#type' => 'textfield',
-    '#title' => t('Bubble GIF URL'),
-    '#description' => t('Enter the full URL of the statistics bubble GIF image.'),
-    '#default_value' => theme_get_setting('bubble_gif_url'),
-  ];
-
-  $form['map_image_url'] = [
-  '#type' => 'textfield',
-  '#title' => t('Map Image URL for Popup'),
-  '#description' => t('Enter the public URL of the map image to display in the popup.'),
-  '#default_value' => theme_get_setting('map_image_url'),
-];
-
-// social media
-$form['social_media'] = [
-  '#type' => 'details',
-  '#title' => t('Social Media Icons'),
-  '#open' => TRUE,
-];
-
-$form['social_media']['facebook_icon_url'] = [
-  '#type' => 'textfield',
-  '#title' => t('Facebook Icon URL'),
-  '#default_value' => theme_get_setting('facebook_icon_url'),
-];
-
-$form['social_media']['instagram_icon_url'] = [
-  '#type' => 'textfield',
-  '#title' => t('Instagram Icon URL'),
-  '#default_value' => theme_get_setting('instagram_icon_url'),
-];
-
-$form['social_media']['twitter_icon_url'] = [
-  '#type' => 'textfield',
-  '#title' => t('X (Twitter) Icon URL'),
-  '#default_value' => theme_get_setting('twitter_icon_url'),
-];
-
-$form['social_media']['linkedin_icon_url'] = [
-  '#type' => 'textfield',
-  '#title' => t('LinkedIn Icon URL'),
-  '#default_value' => theme_get_setting('linkedin_icon_url'),
-];
-
-  // Attach submit handler
-  $form['#submit'][] = 'iitb_theme_theme_settings_submit';
-
   $form['footer_background'] = [
     '#type' => 'color',
     '#title' => t('Footer Background Color'),
-    '#description' => t('Choose a background color for the footer section.'),
     '#default_value' => theme_get_setting('footer_background') ?: '#f5f5f5',
   ];
-
 }
 
 /**
- * Submit handler for saving theme settings.
+ * Implements hook_form_system_theme_settings_submit().
  */
-function iitb_theme_theme_settings_submit($form, FormStateInterface $form_state) {
-  $config = \Drupal::configFactory()->getEditable('iitb_theme.settings');
+function iitb_theme_form_system_theme_settings_submit(&$form, FormStateInterface $form_state) {
+  $single_fields = [
+    'hero_image_fid',
+    'hero_overlay_fid',
+    'clickhere_button_fid',
+    'register_button_fid',
+    'bubble_gif_fid',
+    'map_image_fid',
+    'facebook_icon_fid',
+    'instagram_icon_fid',
+    'twitter_icon_fid',
+    'linkedin_icon_fid',
+    'iitb_logo_fid',
+    'fossee_logo_fid',
+    'spoken_logo_fid',
+    'rudra_logo_fid',
+    'iit_tirupati_logo_fid',
+    'navavishkaar_logo_fid',
+    'tn_logo_fid',
+    'nm_icps_logo_fid',
+  ];
 
-  $config->set('top_logo_urls', $form_state->getValue('top_logo_urls'));
-  $config->set('navbar_background', $form_state->getValue('navbar_background'));
-  $config->set('hero_image_url', $form_state->getValue('hero_image_url'));
-  $config->set('hero_overlay_url', $form_state->getValue('hero_overlay_url'));
-  $config->set('clickhere_button_url', $form_state->getValue('clickhere_button_url'));
-  $config->set('register_button_url', $form_state->getValue('register_button_url'));
-  $config->set('bubble_gif_url', $form_state->getValue('bubble_gif_url'));
-  $config->set('map_image_url', $form_state->getValue('map_image_url'));
-  $config->set('facebook_icon_url', $form_state->getValue('facebook_icon_url'));
-  $config->set('instagram_icon_url', $form_state->getValue('instagram_icon_url'));
-  $config->set('twitter_icon_url', $form_state->getValue('twitter_icon_url'));
-  $config->set('linkedin_icon_url', $form_state->getValue('linkedin_icon_url'));
+  $all_fids = [];
 
+  foreach ($single_fields as $field_name) {
+    $fid = $form_state->getValue($field_name);
+    if (is_array($fid) && !empty($fid[0])) {
+      $all_fids[] = $fid[0];
+    }
+  }
 
-  $config->save();
+  $top_logo_fids = $form_state->getValue('top_logo_fids') ?: [];
+  $all_fids = array_merge($all_fids, $top_logo_fids);
+
+  foreach (array_filter($all_fids) as $fid) {
+    if ($file = \Drupal\file\Entity\File::load($fid)) {
+      $file->setPermanent();
+      $file->save();
+    }
+  }
 }
 
 /**
  * Implements hook_preprocess_page().
  */
 function iitb_theme_preprocess_page(array &$variables) {
-  $config = \Drupal::config('iitb_theme.settings');
+  $file_url_generator = \Drupal::service('file_url_generator');
 
-  // Parse and pass top logo URLs
-  $urls = $config->get('top_logo_urls') ?: '';
-  $variables['top_logo_urls'] = array_filter(array_map('trim', explode("\n", $urls)));
+  // Navbar and footer background color
+  $variables['navbar_background'] = theme_get_setting('navbar_background') ?: '#1e1e1e';
+  $variables['footer_background'] = theme_get_setting('footer_background') ?: '#f5f5f5';
 
-  // Navbar color
-  $variables['navbar_background'] = $config->get('navbar_background') ?: '#1e1e1e';
+  // Top logos (multiple)
+  $variables['top_logo_urls'] = [];
+  $top_logo_fids = theme_get_setting('top_logo_fids');
+  if (is_array($top_logo_fids)) {
+    foreach ($top_logo_fids as $fid) {
+      if ($file = \Drupal\file\Entity\File::load($fid)) {
+        $variables['top_logo_urls'][] = $file_url_generator->generateString($file->getFileUri());
+      }
+    }
+  }
 
-  // Hero section assets
-$variables['hero_image_url'] = theme_get_setting('hero_image_url');
-$variables['hero_overlay_url'] = theme_get_setting('hero_overlay_url');
-$variables['clickhere_button_url'] = theme_get_setting('clickhere_button_url');
-$variables['register_button_url'] = theme_get_setting('register_button_url');
-$variables['bubble_gif_url'] = theme_get_setting('bubble_gif_url');
-$variables['map_image_url'] = theme_get_setting('map_image_url');
-$variables['facebook_icon_url'] = theme_get_setting('facebook_icon_url');
-$variables['instagram_icon_url'] = theme_get_setting('instagram_icon_url');
-$variables['twitter_icon_url'] = theme_get_setting('twitter_icon_url');
-$variables['linkedin_icon_url'] = theme_get_setting('linkedin_icon_url');
+  // All single images
+  $image_fields = [
+    'hero_image_url' => 'hero_image_fid',
+    'hero_overlay_url' => 'hero_overlay_fid',
+    'clickhere_button_url' => 'clickhere_button_fid',
+    'register_button_url' => 'register_button_fid',
+    'bubble_gif_url' => 'bubble_gif_fid',
+    'map_image_url' => 'map_image_fid',
+    'facebook_icon_url' => 'facebook_icon_fid',
+    'instagram_icon_url' => 'instagram_icon_fid',
+    'twitter_icon_url' => 'twitter_icon_fid',
+    'linkedin_icon_url' => 'linkedin_icon_fid',
 
-// Load theme config
-  $config = \Drupal::config('iitb_theme.settings');
+    // Partner logos
+    'iitb_logo_url' => 'iitb_logo_fid',
+    'fossee_logo_url' => 'fossee_logo_fid',
+    'spoken_logo_url' => 'spoken_logo_fid',
+    'rudra_logo_url' => 'rudra_logo_fid',
+    'iit_tirupati_logo_url' => 'iit_tirupati_logo_fid',
+    'navavishkaar_logo_url' => 'navavishkaar_logo_fid',
 
-  // Pass footer background color to Twig template
-  $variables['footer_background'] = $config->get('footer_background') ?: '#f5f5f5';
+    // Knowledge partners
+    'tn_logo_url' => 'tn_logo_fid',
+    'nm_icps_logo_url' => 'nm_icps_logo_fid',
+  ];
 
+  foreach ($image_fields as $var => $fid_key) {
+    $variables[$var] = '';
+    $fid = theme_get_setting($fid_key);
+    if (!empty($fid[0])) {
+      if ($file = \Drupal\file\Entity\File::load($fid[0])) {
+        $variables[$var] = $file_url_generator->generateString($file->getFileUri());
+      }
+    }
+  }
 }

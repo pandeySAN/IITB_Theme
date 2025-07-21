@@ -2,6 +2,7 @@
 
 <div id="page-wrapper">
 
+  {# Top Logos Section #}
   {% if top_logo_urls is defined and top_logo_urls|length > 0 %}
     <div id="top-logos" class="region-top-logos">
       {% for logo_url in top_logo_urls %}
@@ -10,6 +11,7 @@
     </div>
   {% endif %}
 
+  {# Header with Navbar #}
   <header id="logo-header" class="site-header">
     {% if page.header %}
       <nav class="menu-bar" style="background-color: {{ navbar_background }};">
@@ -18,90 +20,180 @@
     {% endif %}
   </header>
 
+  {# Hero Overlay Section #}
   <div class="hero-overlay">
     <div class="overlay-container">
       {% if hero_image_url %}
-        <img src="{{ hero_image_url }}" alt="Map background" class="bg-image">
+        <img src="{{ hero_image_url }}" alt="Map background" class="bg-image" />
       {% endif %}
 
       {% if hero_overlay_url %}
-        <img src="{{ hero_overlay_url }}" alt="Overlay Logo" class="overlay-image">
+        <img src="{{ hero_overlay_url }}" alt="Overlay Logo" class="overlay-image" />
       {% endif %}
 
       {% if clickhere_button_url %}
         <a href="#timeline">
-          <img src="{{ clickhere_button_url }}" alt="Click here" class="overlay-clickhere-image">
+          <img src="{{ clickhere_button_url }}" alt="Click here" class="overlay-clickhere-image" />
         </a>
       {% endif %}
 
       {% if register_button_url %}
         <a href="#register">
-          <img src="{{ register_button_url }}" alt="Register" class="overlay-regi-image">
+          <img src="{{ register_button_url }}" alt="Register" class="overlay-regi-image" />
         </a>
       {% endif %}
 
       {% if bubble_gif_url %}
         <a href="#!" class="open-popup" data-popup="popupModal">
-          <img src="{{ bubble_gif_url }}" alt="Stats Bubble" class="bubble-gif">
+          <img src="{{ bubble_gif_url }}" alt="Stats Bubble" class="bubble-gif" />
         </a>
 
         <div id="popupModal" class="popup-modal">
           <div class="popup-content">
             <span class="close-btn">&times;</span>
-            <img src="{{ map_image_url }}" alt="Map Image" class="popup-map-image">
+            <img src="{{ map_image_url }}" alt="Map Image" class="popup-map-image" />
           </div>
         </div>
       {% endif %}
     </div>
   </div>
 
-  <!-- MAIN CONTENT AREA -->
-  <main role="main" class="main-content">
+  {# Main Content #}
+  {# Main Content #}
+<main role="main" class="main-content">
 
-    {# 🔥 Layout Builder content will render here #}
-    {% block content %}
-      {{ page.content }}
-    {% endblock %}
+  {% if page.content.iitb_theme_aboutsection %}
+    <section id="about">
+      {{ page.content.iitb_theme_aboutsection }}
+    </section>
+  {% endif %}
 
-    {# You can keep static blocks below or eventually move them to layout builder blocks #}
+  {% if page.content.iitb_theme_mapathonregister %}
+    <section id="register">
+      {{ page.content.iitb_theme_mapathonregister }}
+    </section>
+  {% endif %}
 
-    <!-- Social Sidebar -->
-    <div class="social-sidebar">
-      {% if facebook_icon_url %}
-        <a href="https://www.facebook.com/FOSSEENMEICT/" target="_blank">
-          <img src="{{ facebook_icon_url }}" alt="Facebook">
-        </a>
+  {% if page.content.iitb_theme_importantdates %}
+    <section id="important-dates">
+      {{ page.content.iitb_theme_importantdates }}
+    </section>
+  {% endif %}
+
+  {% if page.content.iitb_theme_fosseegismandates %}
+    <section id="gis-mandates">
+      {{ page.content.iitb_theme_fosseegismandates }}
+    </section>
+  {% endif %}
+
+  {% if page.content.iitb_theme_partnernew %}
+  <section id="partners" class="partner-section">
+    <h2>Our Partners</h2>
+    <div class="partner-logos-grid">
+      {% if iitb_logo_url %}
+        <img src="{{ iitb_logo_url }}" alt="IIT Bombay Logo" />
       {% endif %}
-      {% if instagram_icon_url %}
-        <a href="https://www.instagram.com/fossee_nmeict/" target="_blank">
-          <img src="{{ instagram_icon_url }}" alt="Instagram">
-        </a>
+      {% if fossee_logo_url %}
+        <img src="{{ fossee_logo_url }}" alt="FOSSEE Logo" />
       {% endif %}
-      {% if twitter_icon_url %}
-        <a href="https://twitter.com/FOSSEE/" target="_blank">
-          <img src="{{ twitter_icon_url }}" alt="Twitter">
-        </a>
+      {% if spoken_logo_url %}
+        <img src="{{ spoken_logo_url }}" alt="Spoken Tutorial Logo" />
       {% endif %}
-      {% if linkedin_icon_url %}
-        <a href="https://www.linkedin.com/company/fossee-iitb/" target="_blank">
-          <img src="{{ linkedin_icon_url }}" alt="LinkedIn">
-        </a>
+      {% if rudra_logo_url %}
+        <img src="{{ rudra_logo_url }}" alt="Rudra Logo" />
+      {% endif %}
+      {% if iit_tirupati_logo_url %}
+        <img src="{{ iit_tirupati_logo_url }}" alt="IIT Tirupati Logo" />
+      {% endif %}
+      {% if navavishkaar_logo_url %}
+        <img src="{{ navavishkaar_logo_url }}" alt="Navavishkaar Logo" />
       {% endif %}
     </div>
 
-  </main>
-</div>
-
-<!-- Footer -->
-{% if page.footer %}
-  <footer class="mapathon-footer" id="custom-footer" style="background-color: {{ footer_background }};">
-    {{ page.footer }}
-  </footer>
+    {% if tn_logo_url or nm_icps_logo_url %}
+      <h2>Knowledge Partners</h2>
+      <div class="knowledge-partner-logos-grid">
+        {% if tn_logo_url %}
+          <img src="{{ tn_logo_url }}" alt="TN Logo" />
+        {% endif %}
+        {% if nm_icps_logo_url %}
+          <img src="{{ nm_icps_logo_url }}" alt="NM-ICPS Logo" />
+        {% endif %}
+      </div>
+    {% endif %}
+  </section>
 {% endif %}
 
+  {% if page.content.iitb_theme_mapathontheme_5 %}
+    <section id="mapathon-themes">
+      {{ page.content.iitb_theme_mapathontheme_5 }}
+    </section>
+  {% endif %}
 
-{% if page.navigation %}
-  <div class="navigation region">
-    {{ page.navigation }}
+  {% if page.content.iitb_theme_mapathonprocessflow %}
+    <section id="mapathon-process-flow">
+      {{ page.content.iitb_theme_mapathonprocessflow }}
+    </section>
+  {% endif %}
+
+  {% if page.content.iitb_theme_eligibility %}
+    <section id="eligibility">
+      {{ page.content.iitb_theme_eligibility }}
+    </section>
+  {% endif %}
+
+  {% if page.content.iitb_theme_organisingteam %}
+    <section id="organising-team">
+      {{ page.content.iitb_theme_organisingteam }}
+    </section>
+  {% endif %}
+
+  {% if page.content.iitb_theme_contactus %}
+    <section id="contact">
+      {{ page.content.iitb_theme_contactus }}
+    </section>
+  {% endif %}
+
+</main>
+
+
+  {# Social Sidebar #}
+  <div class="social-sidebar">
+    {% if facebook_icon_url %}
+      <a href="https://www.facebook.com/FOSSEENMEICT/" target="_blank">
+        <img src="{{ facebook_icon_url }}" alt="Facebook" />
+      </a>
+    {% endif %}
+    {% if instagram_icon_url %}
+      <a href="https://www.instagram.com/fossee_nmeict/" target="_blank">
+        <img src="{{ instagram_icon_url }}" alt="Instagram" />
+      </a>
+    {% endif %}
+    {% if twitter_icon_url %}
+      <a href="https://twitter.com/FOSSEE/" target="_blank">
+        <img src="{{ twitter_icon_url }}" alt="Twitter" />
+      </a>
+    {% endif %}
+    {% if linkedin_icon_url %}
+      <a href="https://www.linkedin.com/company/fossee-iitb/" target="_blank">
+        <img src="{{ linkedin_icon_url }}" alt="LinkedIn" />
+      </a>
+    {% endif %}
   </div>
-{% endif %}
+
+
+  {# Footer Section #}
+  {% if page.footer %}
+    <footer class="mapathon-footer" id="custom-footer" style="background-color: {{ footer_background }};">
+      {{ page.footer }}
+    </footer>
+  {% endif %}
+
+  {# Optional Navigation Region (if needed) #}
+  {% if page.navigation %}
+    <div class="navigation region">
+      {{ page.navigation }}
+    </div>
+  {% endif %}
+
+</div>
