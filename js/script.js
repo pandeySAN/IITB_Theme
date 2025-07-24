@@ -1,51 +1,45 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   console.log("✅ DOM Ready");
 
-  // === Popup Modal Logic ===
   const trigger = document.querySelector(".open-popup");
   const modal = document.getElementById("popupModal");
 
   if (trigger && modal) {
-    const close = modal.querySelector(".close-btn");
+    const closeBtn = modal.querySelector(".close-btn");
+    const content = modal.querySelector(".popup-content");
 
-    trigger.addEventListener("click", function (e) {
+    trigger.addEventListener("click", (e) => {
       e.preventDefault();
       console.log("📌 Opening popup");
       modal.style.display = "flex";
     });
 
-    close.addEventListener("click", function () {
+    closeBtn?.addEventListener("click", () => {
       modal.style.display = "none";
     });
 
-    modal.addEventListener("click", function (e) {
-      const content = modal.querySelector(".popup-content");
+    modal.addEventListener("click", (e) => {
       if (!content.contains(e.target)) {
         modal.style.display = "none";
       }
     });
   }
 
-  // === Theme Tabs Toggle Logic ===
   const tabs = document.querySelectorAll(".theme-tabs .tab");
   const contents = document.querySelectorAll(".theme-tabs .tab-content");
 
-  if (tabs.length > 0 && contents.length > 0) {
+  if (tabs.length && contents.length) {
     tabs.forEach((tab, index) => {
-      // Assign data-tab to each tab and content if not already present
       const tabId = `tab-${index}`;
-      tab.setAttribute("data-tab", tabId);
-      if (contents[index]) contents[index].setAttribute("id", tabId);
+      tab.dataset.tab = tabId;
+      contents[index]?.setAttribute("id", tabId);
 
-      tab.addEventListener("click", function () {
-        // Activate current tab
+      tab.addEventListener("click", () => {
         tabs.forEach(t => t.classList.remove("active"));
-        this.classList.add("active");
+        contents.forEach(c => c.classList.remove("visible"));
 
-        // Show corresponding content
-        contents.forEach(content => content.classList.remove("visible"));
-        const contentToShow = document.getElementById(this.getAttribute("data-tab"));
-        if (contentToShow) contentToShow.classList.add("visible");
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab)?.classList.add("visible");
       });
     });
 

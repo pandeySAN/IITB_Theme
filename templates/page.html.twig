@@ -2,7 +2,6 @@
 
 <div id="page-wrapper">
 
-  {# Top Logos Section #}
   {% if top_logo_urls is defined and top_logo_urls|length > 0 %}
     <div id="top-logos" class="region-top-logos">
       {% for logo_url in top_logo_urls %}
@@ -11,7 +10,6 @@
     </div>
   {% endif %}
 
-  {# Header with Navbar #}
   <header id="logo-header" class="site-header">
     {% if page.header %}
       <nav class="menu-bar" style="background-color: {{ navbar_background }};">
@@ -20,11 +18,10 @@
     {% endif %}
   </header>
 
-  {# Hero Overlay Section #}
   <div class="hero-overlay">
     <div class="overlay-container">
-      {% if hero_image_url %}
-        <img src="{{ hero_image_url }}" alt="Map background" class="bg-image" />
+      {% if hero_url %}
+        <img src="{{ hero_url }}" alt="Map background" class="bg-image" />
       {% endif %}
 
       {% if hero_overlay_url %}
@@ -58,106 +55,102 @@
     </div>
   </div>
 
-  {# Main Content #}
-  {# Main Content #}
-<main role="main" class="main-content">
+  <main role="main" class="main-content">
 
-  {% if page.content.iitb_theme_aboutsection %}
-    <section id="about">
-      {{ page.content.iitb_theme_aboutsection }}
-    </section>
-  {% endif %}
-
-  {% if page.content.iitb_theme_mapathonregister %}
-    <section id="register">
-      {{ page.content.iitb_theme_mapathonregister }}
-    </section>
-  {% endif %}
-
-  {% if page.content.iitb_theme_importantdates %}
-    <section id="important-dates">
-      {{ page.content.iitb_theme_importantdates }}
-    </section>
-  {% endif %}
-
-  {% if page.content.iitb_theme_fosseegismandates %}
-    <section id="gis-mandates">
-      {{ page.content.iitb_theme_fosseegismandates }}
-    </section>
-  {% endif %}
-
-  {% if page.content.iitb_theme_partnernew %}
-  <section id="partners" class="partner-section">
-    <h2>Our Partners</h2>
-    <div class="partner-logos-grid">
-      {% if iitb_logo_url %}
-        <img src="{{ iitb_logo_url }}" alt="IIT Bombay Logo" />
-      {% endif %}
-      {% if fossee_logo_url %}
-        <img src="{{ fossee_logo_url }}" alt="FOSSEE Logo" />
-      {% endif %}
-      {% if spoken_logo_url %}
-        <img src="{{ spoken_logo_url }}" alt="Spoken Tutorial Logo" />
-      {% endif %}
-      {% if rudra_logo_url %}
-        <img src="{{ rudra_logo_url }}" alt="Rudra Logo" />
-      {% endif %}
-      {% if iit_tirupati_logo_url %}
-        <img src="{{ iit_tirupati_logo_url }}" alt="IIT Tirupati Logo" />
-      {% endif %}
-      {% if navavishkaar_logo_url %}
-        <img src="{{ navavishkaar_logo_url }}" alt="Navavishkaar Logo" />
-      {% endif %}
-    </div>
-
-    {% if tn_logo_url or nm_icps_logo_url %}
-      <h2>Knowledge Partners</h2>
-      <div class="knowledge-partner-logos-grid">
-        {% if tn_logo_url %}
-          <img src="{{ tn_logo_url }}" alt="TN Logo" />
-        {% endif %}
-        {% if nm_icps_logo_url %}
-          <img src="{{ nm_icps_logo_url }}" alt="NM-ICPS Logo" />
-        {% endif %}
-      </div>
+    {% if page.content.iitb_theme_aboutsection %}
+      <section id="about">
+        {{ page.content.iitb_theme_aboutsection }}
+      </section>
     {% endif %}
-  </section>
-{% endif %}
 
-  {% if page.content.iitb_theme_mapathontheme_5 %}
-    <section id="mapathon-themes">
-      {{ page.content.iitb_theme_mapathontheme_5 }}
-    </section>
-  {% endif %}
+    {% if page.content.iitb_theme_mapathonregister %}
+      <section id="register">
+        {{ page.content.iitb_theme_mapathonregister }}
+      </section>
+    {% endif %}
 
-  {% if page.content.iitb_theme_mapathonprocessflow %}
-    <section id="mapathon-process-flow">
-      {{ page.content.iitb_theme_mapathonprocessflow }}
-    </section>
-  {% endif %}
+    {% if page.content.iitb_theme_importantdates %}
+      <section id="important-dates">
+        {{ page.content.iitb_theme_importantdates }}
+      </section>
+    {% endif %}
 
-  {% if page.content.iitb_theme_eligibility %}
-    <section id="eligibility">
-      {{ page.content.iitb_theme_eligibility }}
-    </section>
-  {% endif %}
+    {% if page.content.iitb_theme_fosseegismandates %}
+      <section id="gis-mandates">
+        {{ page.content.iitb_theme_fosseegismandates }}
+      </section>
+    {% endif %}
 
-  {% if page.content.iitb_theme_organisingteam %}
-    <section id="organising-team">
-      {{ page.content.iitb_theme_organisingteam }}
-    </section>
-  {% endif %}
+    {% if page.content.iitb_theme_partnernew %}
+      <section id="partners" class="partner-section">
+        <h2>Our Partners</h2>
+        <div class="partner-logos-grid">
+          {% if iitb_logo_url %}
+            <img src="{{ iitb_logo_url }}" alt="IIT Bombay Logo" />
+          {% endif %}
+          {% if fossee_logo_url %}
+            <img src="{{ fossee_logo_url }}" alt="FOSSEE Logo" />
+          {% endif %}
+          {% if spoken_logo_url %}
+            <img src="{{ spoken_logo_url }}" alt="Spoken Tutorial Logo" />
+          {% endif %}
+          {% if rudra_logo_url %}
+            <img src="{{ rudra_logo_url }}" alt="Rudra Logo" />
+          {% endif %}
+          {% if iit_tirupati_logo_url %}
+            <img src="{{ iit_tirupati_logo_url }}" alt="IIT Tirupati Logo" />
+          {% endif %}
+          {% if navavishkaar_logo_url %}
+            <img src="{{ navavishkaar_logo_url }}" alt="Navavishkaar Logo" />
+          {% endif %}
+        </div>
 
-  {% if page.content.iitb_theme_contactus %}
-    <section id="contact">
-      {{ page.content.iitb_theme_contactus }}
-    </section>
-  {% endif %}
+        {% if tn_logo_url or nm_icps_logo_url %}
+          <h2>Knowledge Partners</h2>
+          <div class="knowledge-partner-logos-grid">
+            {% if tn_logo_url %}
+              <img src="{{ tn_logo_url }}" alt="TN Logo" />
+            {% endif %}
+            {% if nm_icps_logo_url %}
+              <img src="{{ nm_icps_logo_url }}" alt="NM-ICPS Logo" />
+            {% endif %}
+          </div>
+        {% endif %}
+      </section>
+    {% endif %}
 
-</main>
+    {% if page.content.iitb_theme_mapathontheme_5 %}
+      <section id="mapathon-themes">
+        {{ page.content.iitb_theme_mapathontheme_5 }}
+      </section>
+    {% endif %}
 
+    {% if page.content.iitb_theme_mapathonprocessflow %}
+      <section id="mapathon-process-flow">
+        {{ page.content.iitb_theme_mapathonprocessflow }}
+      </section>
+    {% endif %}
 
-  {# Social Sidebar #}
+    {% if page.content.iitb_theme_eligibility %}
+      <section id="eligibility">
+        {{ page.content.iitb_theme_eligibility }}
+      </section>
+    {% endif %}
+
+    {% if page.content.iitb_theme_organisingteam %}
+      <section id="organising-team">
+        {{ page.content.iitb_theme_organisingteam }}
+      </section>
+    {% endif %}
+
+    {% if page.content.iitb_theme_contactus %}
+      <section id="contact">
+        {{ page.content.iitb_theme_contactus }}
+      </section>
+    {% endif %}
+
+  </main>
+
   <div class="social-sidebar">
     {% if facebook_icon_url %}
       <a href="https://www.facebook.com/FOSSEENMEICT/" target="_blank">
@@ -181,15 +174,12 @@
     {% endif %}
   </div>
 
-
-  {# Footer Section #}
   {% if page.footer %}
     <footer class="mapathon-footer" id="custom-footer" style="background-color: {{ footer_background }};">
       {{ page.footer }}
     </footer>
   {% endif %}
 
-  {# Optional Navigation Region (if needed) #}
   {% if page.navigation %}
     <div class="navigation region">
       {{ page.navigation }}

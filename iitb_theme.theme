@@ -1,50 +1,81 @@
 <?php
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\file\Entity\File;
 
 /**
  * Implements hook_form_system_theme_settings_alter().
  */
 function iitb_theme_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
-  $image_fields = [
-    'hero_image_fid' => 'Hero Image',
-    'hero_overlay_fid' => 'Hero Overlay Image',
-    'clickhere_button_fid' => '"Click Here" Button Image',
-    'register_button_fid' => '"Register" Button Image',
-    'bubble_gif_fid' => 'Bubble GIF',
-    'map_image_fid' => 'Map Image',
-    'facebook_icon_fid' => 'Facebook Icon',
-    'instagram_icon_fid' => 'Instagram Icon',
-    'twitter_icon_fid' => 'Twitter Icon',
-    'linkedin_icon_fid' => 'LinkedIn Icon',
-
-    // Partner logos
-    'iitb_logo_fid' => 'IIT Bombay Logo',
-    'fossee_logo_fid' => 'FOSSEE Logo',
-    'spoken_logo_fid' => 'Spoken Tutorial Logo',
-    'rudra_logo_fid' => 'Rudra Labs Logo',
-    'iit_tirupati_logo_fid' => 'IIT Tirupati Logo',
-    'navavishkaar_logo_fid' => 'Navavishkaar Logo',
-
-    // Knowledge partners
-    'tn_logo_fid' => 'TN Logo',
-    'nm_icps_logo_fid' => 'NM-ICPS Logo',
+  $form['iitb_theme_images'] = [
+    '#type' => 'details',
+    '#title' => t('Theme Images Settings'),
+    '#open' => TRUE,
   ];
 
-  foreach ($image_fields as $field_name => $title) {
-    $form[$field_name] = [
+  // Define all image fields with their labels
+  $image_fields = [
+    'hero' => 'Hero Image',
+    'hero_overlay' => 'Hero Overlay Image',
+    'clickhere_button' => '"Click Here" Button Image',
+    'register_button' => '"Register" Button Image',
+    'bubble_gif' => 'Bubble GIF',
+    'map_image' => 'Map Image',
+    'facebook_icon' => 'Facebook Icon',
+    'instagram_icon' => 'Instagram Icon',
+    'twitter_icon' => 'Twitter Icon',
+    'linkedin_icon' => 'LinkedIn Icon',
+    'iitb_logo' => 'IIT Bombay Logo',
+    'fossee_logo' => 'FOSSEE Logo',
+    'spoken_logo' => 'Spoken Tutorial Logo',
+    'rudra_logo' => 'Rudra Labs Logo',
+    'iit_tirupati_logo' => 'IIT Tirupati Logo',
+    'navavishkaar_logo' => 'Navavishkaar Logo',
+    'tn_logo' => 'TN Logo',
+    'nm_icps_logo' => 'NM-ICPS Logo',
+  ];
+
+  // Create form fields for each image
+  foreach ($image_fields as $key => $label) {
+    $form['iitb_theme_images'][$key] = [
+      '#type' => 'details',
+      '#title' => t($label),
+      '#open' => FALSE,
+    ];
+
+    $form['iitb_theme_images'][$key]["use_theme_{$key}"] = [
+      '#type' => 'checkbox',
+      '#title' => t("Use the $label supplied by the theme"),
+      '#default_value' => theme_get_setting("use_theme_{$key}"),
+    ];
+
+    $form['iitb_theme_images'][$key]["{$key}_path"] = [
+      '#type' => 'textfield',
+      '#title' => t("Path to custom $label"),
+      '#default_value' => theme_get_setting("{$key}_path"),
+      '#description' => t("Examples: $key.jpg (public filesystem), public://$key.jpg, or themes/IITB_Theme/$key.jpg."),
+    ];
+
+    $form['iitb_theme_images'][$key]["{$key}_upload"] = [
       '#type' => 'managed_file',
-      '#title' => t($title),
+      '#title' => t("Upload $label"),
       '#upload_location' => 'public://theme_uploads/',
-      '#default_value' => theme_get_setting($field_name),
+      '#default_value' => theme_get_setting("{$key}_upload"),
+      '#description' => t("If you don't have direct file access, upload your $label here."),
       '#upload_validators' => [
         'file_validate_extensions' => ['png jpg jpeg gif svg webp'],
       ],
     ];
   }
 
-  // Top logos (multiple uploads)
-  $form['top_logo_fids'] = [
+  // Top logos (multi-upload)
+  $form['iitb_theme_images']['top_logos'] = [
+    '#type' => 'details',
+    '#title' => t('Top Logos'),
+    '#open' => FALSE,
+  ];
+
+  $form['iitb_theme_images']['top_logos']['top_logo_fids'] = [
     '#type' => 'managed_file',
     '#title' => t('Top Logos (Upload multiple logos)'),
     '#multiple' => TRUE,
@@ -55,12 +86,13 @@ function iitb_theme_form_system_theme_settings_alter(&$form, FormStateInterface 
     ],
   ];
 
-  // Color pickers
+  // Color settings
   $form['navbar_background'] = [
     '#type' => 'color',
     '#title' => t('Navbar Background Color'),
     '#default_value' => theme_get_setting('navbar_background') ?: '#1e1e1e',
   ];
+
   $form['footer_background'] = [
     '#type' => 'color',
     '#title' => t('Footer Background Color'),
@@ -72,43 +104,33 @@ function iitb_theme_form_system_theme_settings_alter(&$form, FormStateInterface 
  * Implements hook_form_system_theme_settings_submit().
  */
 function iitb_theme_form_system_theme_settings_submit(&$form, FormStateInterface $form_state) {
-  $single_fields = [
-    'hero_image_fid',
-    'hero_overlay_fid',
-    'clickhere_button_fid',
-    'register_button_fid',
-    'bubble_gif_fid',
-    'map_image_fid',
-    'facebook_icon_fid',
-    'instagram_icon_fid',
-    'twitter_icon_fid',
-    'linkedin_icon_fid',
-    'iitb_logo_fid',
-    'fossee_logo_fid',
-    'spoken_logo_fid',
-    'rudra_logo_fid',
-    'iit_tirupati_logo_fid',
-    'navavishkaar_logo_fid',
-    'tn_logo_fid',
-    'nm_icps_logo_fid',
+  $image_keys = [
+    'hero', 'hero_overlay', 'clickhere_button', 'register_button',
+    'bubble_gif', 'map_image', 'facebook_icon', 'instagram_icon',
+    'twitter_icon', 'linkedin_icon', 'iitb_logo', 'fossee_logo',
+    'spoken_logo', 'rudra_logo', 'iit_tirupati_logo', 'navavishkaar_logo',
+    'tn_logo', 'nm_icps_logo',
   ];
 
-  $all_fids = [];
-
-  foreach ($single_fields as $field_name) {
-    $fid = $form_state->getValue($field_name);
+  // Set all image uploads as permanent
+  foreach ($image_keys as $key) {
+    $fid = $form_state->getValue("{$key}_upload");
     if (is_array($fid) && !empty($fid[0])) {
-      $all_fids[] = $fid[0];
+      if ($file = File::load($fid[0])) {
+        $file->setPermanent();
+        $file->save();
+        \Drupal::service('file.usage')->add($file, 'iitb_theme', 'theme', \Drupal::currentUser()->id());
+      }
     }
   }
 
+  // Handle multiple top logos
   $top_logo_fids = $form_state->getValue('top_logo_fids') ?: [];
-  $all_fids = array_merge($all_fids, $top_logo_fids);
-
-  foreach (array_filter($all_fids) as $fid) {
-    if ($file = \Drupal\file\Entity\File::load($fid)) {
+  foreach ($top_logo_fids as $fid) {
+    if ($file = File::load($fid)) {
       $file->setPermanent();
       $file->save();
+      \Drupal::service('file.usage')->add($file, 'iitb_theme', 'theme', \Drupal::currentUser()->id());
     }
   }
 }
@@ -119,53 +141,34 @@ function iitb_theme_form_system_theme_settings_submit(&$form, FormStateInterface
 function iitb_theme_preprocess_page(array &$variables) {
   $file_url_generator = \Drupal::service('file_url_generator');
 
-  // Navbar and footer background color
+  // Background colors
   $variables['navbar_background'] = theme_get_setting('navbar_background') ?: '#1e1e1e';
   $variables['footer_background'] = theme_get_setting('footer_background') ?: '#f5f5f5';
 
-  // Top logos (multiple)
+  // Multiple top logos
   $variables['top_logo_urls'] = [];
-  $top_logo_fids = theme_get_setting('top_logo_fids');
-  if (is_array($top_logo_fids)) {
-    foreach ($top_logo_fids as $fid) {
-      if ($file = \Drupal\file\Entity\File::load($fid)) {
-        $variables['top_logo_urls'][] = $file_url_generator->generateString($file->getFileUri());
-      }
+  $top_logo_fids = theme_get_setting('top_logo_fids') ?: [];
+  foreach ($top_logo_fids as $fid) {
+    if ($file = File::load($fid)) {
+      $variables['top_logo_urls'][] = $file_url_generator->generateString($file->getFileUri());
     }
   }
 
-  // All single images
-  $image_fields = [
-    'hero_image_url' => 'hero_image_fid',
-    'hero_overlay_url' => 'hero_overlay_fid',
-    'clickhere_button_url' => 'clickhere_button_fid',
-    'register_button_url' => 'register_button_fid',
-    'bubble_gif_url' => 'bubble_gif_fid',
-    'map_image_url' => 'map_image_fid',
-    'facebook_icon_url' => 'facebook_icon_fid',
-    'instagram_icon_url' => 'instagram_icon_fid',
-    'twitter_icon_url' => 'twitter_icon_fid',
-    'linkedin_icon_url' => 'linkedin_icon_fid',
-
-    // Partner logos
-    'iitb_logo_url' => 'iitb_logo_fid',
-    'fossee_logo_url' => 'fossee_logo_fid',
-    'spoken_logo_url' => 'spoken_logo_fid',
-    'rudra_logo_url' => 'rudra_logo_fid',
-    'iit_tirupati_logo_url' => 'iit_tirupati_logo_fid',
-    'navavishkaar_logo_url' => 'navavishkaar_logo_fid',
-
-    // Knowledge partners
-    'tn_logo_url' => 'tn_logo_fid',
-    'nm_icps_logo_url' => 'nm_icps_logo_fid',
+  // Individual images
+  $image_keys = [
+    'hero', 'hero_overlay', 'clickhere_button', 'register_button',
+    'bubble_gif', 'map_image', 'facebook_icon', 'instagram_icon',
+    'twitter_icon', 'linkedin_icon', 'iitb_logo', 'fossee_logo',
+    'spoken_logo', 'rudra_logo', 'iit_tirupati_logo', 'navavishkaar_logo',
+    'tn_logo', 'nm_icps_logo',
   ];
 
-  foreach ($image_fields as $var => $fid_key) {
-    $variables[$var] = '';
-    $fid = theme_get_setting($fid_key);
-    if (!empty($fid[0])) {
-      if ($file = \Drupal\file\Entity\File::load($fid[0])) {
-        $variables[$var] = $file_url_generator->generateString($file->getFileUri());
+  foreach ($image_keys as $key) {
+    $variables["{$key}_url"] = '';
+    $fid = theme_get_setting("{$key}_upload");
+    if (is_array($fid) && !empty($fid[0])) {
+      if ($file = File::load($fid[0])) {
+        $variables["{$key}_url"] = $file_url_generator->generateString($file->getFileUri());
       }
     }
   }

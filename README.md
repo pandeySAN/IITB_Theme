@@ -1,25 +1,25 @@
 # IITB Drupal Theme
 
-A modern and responsive custom Drupal 10/11 theme designed specifically for events such as **Mapathon**, developed by the **FOSSEE GIS team at IIT Bombay**. It supports Layout Builder, is highly configurable, and features dynamic sections for banners, logos, social icons, and more.
+A modern and responsive custom Drupal 10/11 theme designed for events like **Mapathon**, developed by the **FOSSEE GIS team at IIT Bombay**. It supports Layout Builder, offers flexible configuration, and features dynamic sections for banners, logos, social icons, and more.
 
 ---
 
-## 🤖 Key Features
+## 🔑 Key Features
 
-* **Drupal 10 & 11 compatible**
+* **Compatible with Drupal 10 & 11**
 * Based on the **Classy** base theme
-* **Layout Builder support** for flexible content structure
-* Highly **customizable theme settings** through UI
-* Dynamic configuration of:
+* **Layout Builder** support for flexible content structure
+* **Customizable theme settings** via the UI
+* Dynamically configurable:
 
   * Top logos
   * Hero banner and overlay images
   * Action buttons ("Click Here", "Register")
-  * Partners and Knowledge Partner logos
+  * Partner and Knowledge Partner logos
   * Social media icons (Facebook, Instagram, Twitter/X, LinkedIn)
   * Process flow image and modal popup
 * Responsive and accessible design
-* Popup modal support for displaying statistics or maps
+* Popup modal for displaying maps or statistics
 
 ---
 
@@ -27,7 +27,7 @@ A modern and responsive custom Drupal 10/11 theme designed specifically for even
 
 ### Step 1: Place the Theme Folder
 
-Extract and place the theme into your Drupal installation:
+Extract and place the theme inside your Drupal installation:
 
 ```bash
 /themes/custom/iitb_theme
@@ -35,10 +35,11 @@ Extract and place the theme into your Drupal installation:
 
 ### Step 2: Enable the Theme
 
-#### Option 1: Using Drupal Admin UI
+#### Option 1: Using the Admin UI
 
-* Navigate to **Appearance**
-* Find **"IITB Theme"** and click **Install and Set as Default**
+* Go to **Appearance**
+* Locate **"IITB Theme"**
+* Click **Install and set as default**
 
 #### Option 2: Using Drush (Recommended)
 
@@ -52,7 +53,7 @@ drush cr
 
 ## ⚙️ Configuration
 
-Access all custom settings from:
+All theme settings can be accessed via:
 
 ```
 Appearance → Settings → IITB Theme
@@ -63,12 +64,12 @@ Appearance → Settings → IITB Theme
 * Top logo URLs (one per line)
 * Hero background image URL
 * Hero overlay image URL
-* "Click Here" and "Register" button image URLs
+* Image URLs for "Click Here" and "Register" buttons
 
 ### Popup Modal
 
 * Stats bubble GIF URL
-* Map image to display inside popup
+* Map image URL to be shown inside the popup
 
 ### Partner Logos
 
@@ -77,23 +78,23 @@ Appearance → Settings → IITB Theme
 
 ### Social Media Icons
 
-* Facebook, Instagram, LinkedIn, X (Twitter) icon image URLs
+* Facebook, Instagram, Twitter/X, and LinkedIn icon image URLs
 
 ### Process Flow
 
-* Image URL to visually describe the event's workflow
+* Image URL to visually explain the event's process flow
 
 ---
 
-## 📷 Image Instructions
+## 📷 Image Guidelines
 
-All images must be publicly accessible URLs. If uploading via Drupal:
+All images must use publicly accessible URLs. If uploading via Drupal:
 
 1. Go to **Content → Media → Add Media**
 2. Upload your image
-3. Copy the URL and paste it into the appropriate field under theme settings
+3. Copy the generated image URL and paste it into the theme settings
 
-Example URL:
+**Example URL:**
 
 ```
 http://localhost/drupal10-rebuild/sites/default/files/2025-07/iitb-logo.png
@@ -117,31 +118,39 @@ iitb_theme/
 ├── iitb_theme.libraries.yml
 ├── iitb_theme.theme
 ├── iitb_theme.settings.yml (optional)
-├── screenshot.png (optional preview in Appearance)
+├── screenshot.png (optional preview image)
 ```
 
 ---
 
-## 🚀 Developer Notes
+## 🛠 Developer Notes
 
-This theme uses standard Drupal hooks like:
+The theme uses standard Drupal hooks:
 
-* `hook_form_system_theme_settings_alter()` to define custom UI settings
-* `hook_preprocess_page()` to pass theme variables to Twig templates
+* `hook_form_system_theme_settings_alter()` to define custom settings
+* `hook_preprocess_page()` to pass variables to Twig templates
 
-Twig templates use `{{ attach_library('iitb_theme/global-styling') }}` to include CSS/JS. Ensure your custom URLs and media are properly configured to avoid broken assets.
+Twig templates use:
 
-You can extend the theme using block regions, layout builder, or by adding new templates/components.
+```twig
+{{ attach_library('iitb_theme/global-styling') }}
+```
+
+to load CSS and JS.
+
+Ensure all URLs and media files are correctly configured to avoid broken images or assets.
+
+You can further enhance the theme using custom block regions, layout builder, or new Twig templates.
 
 ---
 
 ## 🙏 Credits
 
-This theme is developed by the **FOSSEE GIS Team**, IIT Bombay
+Developed by the **FOSSEE GIS Team**, IIT Bombay
 Visit us at [https://fossee.in](https://fossee.in)
 
 ---
 
 ## 📄 License
 
-This theme is open-source
+This theme is open-source and free to use.

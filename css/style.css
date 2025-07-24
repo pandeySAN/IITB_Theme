@@ -47,12 +47,22 @@ body {
   z-index: 1000;
 }
 
-.menu-links {
+/* Container for main menu links */
+.menu-bar ul.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   gap: 10px;
 }
 
-.menu-bar a {
+/* Individual menu items */
+.menu-bar ul.menu > li {
+  display: inline-block;
+}
+
+/* Links styling */
+.menu-bar ul.menu > li > a {
   color: white;
   text-decoration: none;
   padding: 6px 10px;
@@ -61,11 +71,13 @@ body {
   display: inline-block;
 }
 
-.menu-bar a:hover {
+/* Hover effect */
+.menu-bar ul.menu > li > a:hover {
   background-color: #ec2922;
   border-radius: 4px;
 }
 
+/* Fixed top bar */
 .menu-fixed {
   position: fixed !important;
   top: 0;
@@ -75,12 +87,14 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
+/* Smooth scroll */
 html {
   scroll-behavior: smooth;
 }
 
+/* Avoid overlap with fixed menu */
 main.main-content {
-  padding-top: 0;
+  padding-top: 45px;
 }
 
 
@@ -280,8 +294,6 @@ main.main-content {
   }
 }
 
-
-/* ===== Registration Section ===== */
 /* ===== Registration Section Styling ===== */
 .registration-section {
   background-color: #ffffff;
@@ -337,7 +349,7 @@ main.main-content {
 /* ===== Important Dates Section ===== */
 .important-dates-section {
   background-color: #fff;
-  padding: 40px 30px 10px; /* ⬅ bottom padding reduced */
+  padding: 40px 30px 10px;
   font-family: 'Georgia', serif;
   margin-bottom: 0;
 }
@@ -402,7 +414,7 @@ main.main-content {
   font-family: "Times New Roman", Times, serif;
   padding: 25px 30px 20px;
   background-color: #ffffff;
-  margin-top: 0; /* ⬅ removed gap above */
+  margin-top: 0;
   margin-bottom: 0;
 }
 
